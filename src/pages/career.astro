@@ -1,9 +1,333 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import TimelineColumn from "@/components/TimelineColumn.astro";
+
+interface TimelineEntry {
+  start: string;
+  end: string | null;
+  title: string;
+  org: string;
+  description: string;
+  accentColor: string | null;
+}
+
+const work: TimelineEntry[] = [
+  {
+    start: "2026-04",
+    end: null,
+    title: "Software Engineer II",
+    org: "Dynatrace",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2023-12",
+    end: "2026-03",
+    title: "Application Development Senior Analyst",
+    org: "Accenture",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2022-12",
+    end: "2023-11",
+    title: "Application Development Analyst",
+    org: "Accenture",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2022-01",
+    end: "2022-11",
+    title: "Application Development Associate",
+    org: "Accenture",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2021-08",
+    end: "2021-12",
+    title: "Full Stack Developer",
+    org: "Freelance",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2021-02",
+    end: "2021-07",
+    title: "Consulting Intern",
+    org: "Accenture",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2020-07",
+    end: "2020-12",
+    title: "Military Service",
+    org: "Austrian Armed Forces",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2019-08",
+    end: "2019-08",
+    title: "Summer Intern",
+    org: "Wien IT",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2017-08",
+    end: "2017-08",
+    title: "Summer Intern",
+    org: "SNAP Consulting",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+];
+
+const education: TimelineEntry[] = [
+  {
+    start: "2024-09",
+    end: "2026-06",
+    title: "Master - Business Informatics",
+    org: "TU Wien",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2025-07",
+    end: "2025-07",
+    title: "Research Assistant",
+    org: "King's College London",
+    description:
+      "Integration of textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2021-10",
+    end: "2024-07",
+    title: "Bachelor - Software & Information Engineering",
+    org: "TU Wien",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  {
+    start: "2015-09",
+    end: "2020-06",
+    title: "Matura - Informatics",
+    org: "HTL St. Pölten",
+    description: "...",
+    accentColor: "var(--color-accent)",
+  },
+  // Certifications
+  {
+    start: "2025-09",
+    end: "2025-09",
+    title: "SAP Certified Associate - Back-End Developer - ABAP Cloud",
+    org: "SAP",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2021-04",
+    end: "2021-04",
+    title: "Microsoft Azure Fundamentals (AZ-900)",
+    org: "Microsoft",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2019-02",
+    end: "2019-02",
+    title: "Oracle Certified Associate, Java SE 8 Programmer",
+    org: "Oracle",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+  {
+    start: "2018-06",
+    end: "2018-06",
+    title: "BEC Vantage C1",
+    org: "Cambridge English",
+    description: "...",
+    accentColor: "var(--color-accent-secondary)",
+  },
+];
+
+const now = new Date();
+const currentYear = now.getFullYear();
+const currentMonth = now.getMonth() + 1;
+
+const monthIndex = (year: number, month: number) => year * 12 + (month - 1);
+const currentMonthIdx = monthIndex(currentYear, currentMonth);
+
+const parseDate = (dateStr: string) => {
+  const [year, month] = dateStr.split("-").map(Number);
+  return monthIndex(year, month);
+};
+
+const allEntries = [...work, ...education];
+const earliestMonthIdx = Math.min(...allEntries.map((e) => parseDate(e.start))) - 1;
+const earliestYear = Math.floor(earliestMonthIdx / 12);
+const totalMonths = currentMonthIdx - earliestMonthIdx + 1;
+
+// +1 for header; +1 because of CSS grid row indexing
+const getRow = (dateStr: string) => currentMonthIdx - parseDate(dateStr) + 2;
+const nowDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}`;
+
+const addMonth = (dateStr: string) => {
+  let [year, month] = dateStr.split("-").map(Number);
+  month++;
+  if (month > 12) {
+    month = 1;
+    year++;
+  }
+  return `${year}-${String(month).padStart(2, "0")}`;
+};
+
+// Add a month for end dates, since they happen at the end of a month -> beginning of the next month
+const getEndRow = (entry: TimelineEntry) =>
+  Math.max(getRow(entry.end ? addMonth(entry.end) : nowDate), 2);
+
+interface YearRange {
+  year: number;
+  startRow: number;
+  endRow: number;
+}
+
+const yearRanges: YearRange[] = [];
+for (let y = currentYear; y >= earliestYear; y--) {
+  const startM = Math.max(monthIndex(y, 1), earliestMonthIdx);
+  const endM = Math.min(monthIndex(y, 12), currentMonthIdx);
+  yearRanges.push({
+    year: y,
+    startRow: currentMonthIdx - endM + 2,
+    endRow: currentMonthIdx - startM + 2,
+  });
+}
 ---
 
 <BaseLayout>
-    <div>
-        Career
+  <section class="container">
+    <h1>Career</h1>
+    <p>My professional journey through work and education.</p>
+  </section>
+
+  <section class="container timeline-wrapper">
+    <div
+      class="timeline"
+      style={`grid-template-rows: auto repeat(${totalMonths}, var(--row-height))`}
+    >
+      <div class="header work-header" style="grid-row: 1; grid-column: 1">Work Experience</div>
+      <div class="header edu-header" style="grid-row: 1; grid-column: 5">Education</div>
+
+      {
+        yearRanges
+          .filter((yr) => monthIndex(yr.year, 1) >= earliestMonthIdx)
+          .map((yr) => (
+            <>
+              <div class="year-boundary" style={`grid-row: ${yr.endRow}; grid-column: 1 / 3`} />
+              <div class="year-boundary" style={`grid-row: ${yr.endRow}; grid-column: 4 / -1`} />
+            </>
+          ))
+      }
+
+      {
+        yearRanges.map((yr) => (
+          <div
+            class={`year ${yr.year === currentYear ? "current" : ""}`}
+            style={`grid-row: ${yr.startRow} / ${yr.endRow + 1}; grid-column: 3`}
+          >
+            {yr.year}
+          </div>
+        ))
+      }
+
+      <div class="line" style={`grid-row: 2 / ${totalMonths + 2}; grid-column: 2`}></div>
+      <div class="line" style={`grid-row: 2 / ${totalMonths + 2}; grid-column: 4`}></div>
+
+      <TimelineColumn
+        entries={work}
+        lineColumn={2}
+        cardColumn={1}
+        cardLocation="left"
+        getRow={getRow}
+        getEndRow={getEndRow}
+      />
+
+      <TimelineColumn
+        entries={education}
+        lineColumn={4}
+        cardColumn={5}
+        cardLocation="right"
+        getRow={getRow}
+        getEndRow={getEndRow}
+      />
     </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .timeline-wrapper {
+    padding: 3rem 1.5rem 6rem;
+  }
+
+  .timeline {
+    --row-height: 20px;
+    display: grid;
+    grid-template-columns: 1fr 24px 70px 24px 1fr;
+    position: relative;
+  }
+
+  .header {
+    color: var(--color-text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-bottom: 1rem;
+  }
+
+  .work-header {
+    text-align: right;
+    padding-right: 1rem;
+  }
+
+  .edu-header {
+    text-align: left;
+    padding-left: 1rem;
+  }
+
+  .year-boundary {
+    align-self: end;
+    height: 0;
+    border-top: 1px solid var(--color-border);
+    z-index: 0;
+  }
+
+  .year {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+    background-color: var(--color-bg-main);
+    z-index: 2;
+    opacity: 0.7;
+    padding-bottom: var(--row-height);
+  }
+
+  .year.current {
+    color: var(--color-accent);
+    font-weight: 600;
+    opacity: 1;
+  }
+
+  .line {
+    width: 2px;
+    background-color: var(--color-border);
+    justify-self: center;
+    z-index: 1;
+    position: relative;
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+// TODO need to consider the fact that this is static, i.e., how can I show always an expanding timeline
+
+interface TimelineEntry {
+  start: string;
+  end: string | null;
+  title: string;
+  org: string;
+  description: string;
+  accentColor: string | null;
+}
+
+interface Props {
+  entries: TimelineEntry[];
+  lineColumn: number;
+  cardColumn: number;
+  cardLocation: "left" | "right";
+  getRow: (dateStr: string) => number;
+  getEndRow: (entry: TimelineEntry) => number;
+}
+
+const { entries, lineColumn, cardColumn, cardLocation, getRow, getEndRow } = Astro.props;
+
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const formatDate = (dateStr: string) => {
+  const [year, month] = dateStr.split("-").map(Number);
+  return `${monthNames[month - 1]} ${year}`;
+};
+
+const formatDateRange = (start: string, end: string | null) => {
+  if (start === end) {
+    return formatDate(start);
+  }
+
+  return `${formatDate(start)} — ${end ? formatDate(end) : "Present"}`;
+};
+---
+
+{
+  entries.map((entry) => {
+    const startRow = getRow(entry.start);
+    const endRow = getEndRow(entry) - (entry.end ? 0 : 1);
+    const differentMonths = entry.start !== entry.end;
+
+    return (
+      <>
+        {startRow > endRow && differentMonths && (
+          <div
+            class={`duration ${!entry.end ? "ongoing" : ""}`}
+            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; ${entry.accentColor ? "background-color: " + entry.accentColor : ""}`}
+          />
+        )}
+        <div
+          class={`dot start ${entry.end ? "" : "active"}`}
+          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; ${entry.accentColor ? "border-color: " + entry.accentColor : ""}`}
+          title={formatDate(entry.start)}
+        />
+        {entry.end && differentMonths && (
+          <div
+            class="dot"
+            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; ${entry.accentColor ? "border-color: " + entry.accentColor : ""}`}
+            title={entry.end ? formatDate(entry.end) : "Present"}
+          />
+        )}
+        <div
+          class={`timeline-card ${cardLocation + "-card"}`}
+          style={`grid-row: ${startRow}; grid-column: ${cardColumn}`}
+        >
+          <span class="date-range" style={`color: ${entry.accentColor}`}>
+            {formatDateRange(entry.start, entry.end)}
+          </span>
+          <h3>{entry.title}</h3>
+          <span class="org">{entry.org}</span>
+          <p>{entry.description}</p>
+        </div>
+      </>
+    );
+  })
+}
+
+<style>
+  .duration {
+    width: 2px;
+    background-color: var(--color-accent);
+    justify-self: center;
+    align-self: start;
+    height: calc(100% - var(--row-height));
+    z-index: 2;
+    position: relative;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-bg-main);
+    border: 2px solid var(--color-accent);
+    justify-self: center;
+    align-self: end;
+    margin-bottom: -6px;
+    z-index: 3;
+  }
+
+  .dot.start {
+    z-index: 4;
+  }
+
+  .dot.active {
+    background-color: var(--color-accent);
+    width: 14px;
+    height: 14px;
+    box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.2);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.2);
+    }
+    50% {
+      box-shadow: 0 0 0 8px rgba(0, 255, 194, 0.05);
+    }
+  }
+
+  .timeline-card {
+    align-self: start;
+    background-color: var(--color-bg-surface);
+    border: 1px solid var(--color-border);
+    padding: 1rem 1.25rem;
+    z-index: 4;
+  }
+
+  .left-card {
+    justify-self: end;
+    text-align: right;
+    margin-right: 1rem;
+    max-width: 340px;
+  }
+
+  .right-card {
+    justify-self: start;
+    margin-left: 1rem;
+    max-width: 340px;
+  }
+
+  .date-range {
+    color: var(--color-accent);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .timeline-card h3 {
+    font-size: 1.05rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .org {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-card p {
+    font-size: 0.88rem;
+    margin-bottom: 0;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot.active {
+      animation: none;
+    }
+  }
+</style>
