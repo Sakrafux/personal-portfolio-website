@@ -14,4 +14,4 @@ Variations created via https://realfavicongenerator.net/
 
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
-- sticky entries moving with the scrolling?
+  - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline

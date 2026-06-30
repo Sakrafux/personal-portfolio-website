@@ -6,7 +6,8 @@ interface TimelineEntry {
   end: string | null;
   title: string;
   org: string;
-  description: string;
+  description: string | null;
+  icon: string | null;
   accentColor: string;
   rowAdjustment?: number;
   lineColumn: number;
@@ -102,9 +103,14 @@ const formatDateRange = (start: string, end: string | null) => {
           <span class="date-range" style={`color: ${entry.accentColor}`}>
             {formatDateRange(entry.start, entry.end)}
           </span>
-          <h3>{entry.title}</h3>
-          <span class="org">{entry.org}</span>
-          <p>{entry.description}</p>
+          <div class="card-header">
+            {entry.icon && <img src={entry.icon} alt="" class="card-icon" width="32" height="32" />}
+            <div class="card-titles">
+              <h3>{entry.title}</h3>
+              <span class="org">{entry.org}</span>
+            </div>
+          </div>
+          {entry.description && <p>{entry.description}</p>}
         </div>
       </>
     );
@@ -211,6 +217,7 @@ const formatDateRange = (start: string, end: string | null) => {
 
   .timeline-card {
     --chosen-accent-color: var(--color-accent);
+    width: 100%;
     align-self: start;
     background-color: var(--color-bg-surface);
     border: 1px solid var(--color-border);
@@ -228,7 +235,6 @@ const formatDateRange = (start: string, end: string | null) => {
 
   .timeline-card.expanded {
     z-index: 10;
-    padding: 1rem 1.25rem;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     border-color: var(--chosen-accent-color);
   }
@@ -268,17 +274,36 @@ const formatDateRange = (start: string, end: string | null) => {
     margin-bottom: 0.15rem;
   }
 
+  .card-header {
+    display: flex;
+    align-items: start;
+    gap: 0.75rem;
+  }
+
+  .left-card .card-header {
+    flex-direction: row-reverse;
+  }
+
+  .card-icon {
+    flex-shrink: 0;
+    margin-top: 0.25rem;
+  }
+
+  .card-titles {
+    min-width: 0;
+  }
+
   .org {
     color: var(--color-text-muted);
     font-size: 0.9rem;
     display: block;
-    margin-bottom: 0.5rem;
   }
 
   .timeline-card p {
     font-size: 0.88rem;
     margin-bottom: 0;
     line-height: 1.5;
+    margin-top: 0.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {
