@@ -1,0 +1,47 @@
+---
+import { education, work } from "@/data/career-timeline.ts";
+import Timeline from "@/components/Timeline.astro";
+
+const importantWork = work
+  .filter((entry) => entry.important)
+  .map((entry) => ({
+    ...entry,
+    lineColumn: 2,
+    cardColumn: 1,
+    cardLocation: "left" as "left" | "right",
+    prefix: "work",
+  }));
+
+importantWork[1].rowAdjustment = 3;
+importantWork[4].rowAdjustment = -2;
+
+const importantEducation = education
+  .filter((entry) => entry.important)
+  .map((entry) => ({
+    ...entry,
+    lineColumn: 4,
+    cardColumn: 5,
+    cardLocation: "right" as "left" | "right",
+    prefix: "edu",
+  }));
+
+importantEducation[1].rowAdjustment = 0;
+
+const allEntries = [...importantWork, ...importantEducation];
+---
+
+<section class="container">
+  <h1>Career</h1>
+  <p>My professional journey through work and education.</p>
+</section>
+
+<Timeline entries={allEntries} rowHeight="10px" />
+
+<section class="container">
+  <p>
+    For a more thorough exploration, refer to the dedicated <a
+      href="/career"
+      style="text-decoration: underline">Career</a
+    > page.
+  </p>
+</section>

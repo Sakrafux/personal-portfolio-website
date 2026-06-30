@@ -1,25 +1,10 @@
 ---
-// TODO need to consider the fact that this is static, i.e., how can I show always an expanding timeline
-
-interface TimelineEntry {
-  start: string;
-  end: string | null;
-  title: string;
-  org: string;
-  description: string | null;
-  icon: string | null;
-  accentColor: string;
-  rowAdjustment?: number;
-  lineColumn: number;
-  cardColumn: number;
-  cardLocation: "left" | "right";
-  prefix: string;
-}
+import type { TimelineEntryExtended } from "@/data/career-timeline.ts";
 
 interface Props {
-  entries: TimelineEntry[];
+  entries: TimelineEntryExtended[];
   getRow: (dateStr: string) => number;
-  getEndRow: (entry: TimelineEntry) => number;
+  getEndRow: (entry: TimelineEntryExtended) => number;
 }
 
 const { entries, getRow, getEndRow } = Astro.props;
