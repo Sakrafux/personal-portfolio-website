@@ -1,25 +1,28 @@
 ---
 // TODO need to consider the fact that this is static, i.e., how can I show always an expanding timeline
 
+// TODO sticky entries moving with the scrolling?
+
 interface TimelineEntry {
   start: string;
   end: string | null;
   title: string;
   org: string;
   description: string;
-  accentColor: string | null;
+  accentColor: string;
+  lineColumn: number;
+  cardColumn: number;
+  cardLocation: "left" | "right";
+  prefix: string;
 }
 
 interface Props {
   entries: TimelineEntry[];
-  lineColumn: number;
-  cardColumn: number;
-  cardLocation: "left" | "right";
   getRow: (dateStr: string) => number;
   getEndRow: (entry: TimelineEntry) => number;
 }
 
-const { entries, lineColumn, cardColumn, cardLocation, getRow, getEndRow } = Astro.props;
+const { entries, getRow, getEndRow } = Astro.props;
 
 const monthNames = [
   "Jan",
@@ -51,7 +54,10 @@ const formatDateRange = (start: string, end: string | null) => {
 ---
 
 {
-  entries.map((entry) => {
+  entries.map((entry, i) => {
+    const { accentColor, lineColumn, cardColumn, cardLocation, prefix } = entry;
+
+    const id = `${prefix}-${i}`;
     const startRow = getRow(entry.start);
     const endRow = getEndRow(entry) - (entry.end ? 0 : 1);
     const differentMonths = entry.start !== entry.end;
@@ -61,24 +67,29 @@ const formatDateRange = (start: string, end: string | null) => {
         {startRow > endRow && differentMonths && (
           <div
             class={`duration ${!entry.end ? "ongoing" : ""}`}
-            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; ${entry.accentColor ? "background-color: " + entry.accentColor : ""}`}
+            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; background-color: ${accentColor}`}
           />
         )}
         <div
           class={`dot start ${entry.end ? "" : "active"}`}
-          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; ${entry.accentColor ? "border-color: " + entry.accentColor : ""}`}
+          data-entry-id={id}
+          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; border-color: ${accentColor}; --chosen-accent-color: ${accentColor}`}
           title={formatDate(entry.start)}
         />
         {entry.end && differentMonths && (
           <div
             class="dot"
-            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; ${entry.accentColor ? "border-color: " + entry.accentColor : ""}`}
+            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${accentColor}`}
             title={entry.end ? formatDate(entry.end) : "Present"}
           />
         )}
         <div
           class={`timeline-card ${cardLocation + "-card"}`}
-          style={`grid-row: ${startRow}; grid-column: ${cardColumn}`}
+          data-entry-id={id}
+          tabindex="0"
+          role="button"
+          aria-expanded="false"
+          style={`grid-row: ${startRow}; grid-column: ${cardColumn}; --chosen-accent-color: ${accentColor}`}
         >
           <span class="date-range" style={`color: ${entry.accentColor}`}>
             {formatDateRange(entry.start, entry.end)}
@@ -91,6 +102,44 @@ const formatDateRange = (start: string, end: string | null) => {
     );
   })
 }
+
+<script>
+  function toggleEntry(id: string) {
+    const card = document.querySelector(`.timeline-card[data-entry-id="${id}"]`);
+    if (!card) return;
+
+    const isExpanded = card.classList.contains("expanded");
+
+    document.querySelectorAll(".timeline-card.expanded").forEach((c) => {
+      c.classList.remove("expanded");
+      c.setAttribute("aria-expanded", "false");
+    });
+    document.querySelectorAll(".dot.selected").forEach((d) => d.classList.remove("selected"));
+
+    if (!isExpanded) {
+      card.classList.add("expanded");
+      card.setAttribute("aria-expanded", "true");
+      document
+        .querySelectorAll(`.dot[data-entry-id="${id}"]`)
+        .forEach((d) => d.classList.add("selected"));
+    }
+  }
+
+  function handleInteraction(e: Event) {
+    const target = (e.target as Element)?.closest("[data-entry-id]");
+    if (!target) return;
+    const id = target.getAttribute("data-entry-id");
+    if (id) toggleEntry(id);
+  }
+
+  document.addEventListener("click", handleInteraction);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    handleInteraction(e);
+    if ((e.target as Element)?.closest("[data-entry-id]")) e.preventDefault();
+  });
+</script>
 
 <style>
   .duration {
@@ -116,6 +165,7 @@ const formatDateRange = (start: string, end: string | null) => {
 
   .dot.start {
     z-index: 4;
+    cursor: pointer;
   }
 
   .dot.active {
@@ -124,6 +174,10 @@ const formatDateRange = (start: string, end: string | null) => {
     height: 14px;
     box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.2);
     animation: pulse 2s ease-in-out infinite;
+  }
+
+  .dot.selected {
+    background-color: var(--chosen-accent-color);
   }
 
   @keyframes pulse {
@@ -137,11 +191,36 @@ const formatDateRange = (start: string, end: string | null) => {
   }
 
   .timeline-card {
+    --chosen-accent-color: var(--color-accent);
     align-self: start;
     background-color: var(--color-bg-surface);
     border: 1px solid var(--color-border);
-    padding: 1rem 1.25rem;
+    padding: 0.5rem 0.75rem;
     z-index: 4;
+    cursor: pointer;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .timeline-card:hover {
+    border-color: var(--chosen-accent-color);
+  }
+
+  .timeline-card.expanded {
+    z-index: 10;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    border-color: var(--chosen-accent-color);
+  }
+
+  .timeline-card:not(.expanded) .date-range,
+  .timeline-card:not(.expanded) p {
+    display: none;
+  }
+
+  .timeline-card:not(.expanded) .org {
+    margin-bottom: 0;
   }
 
   .left-card {

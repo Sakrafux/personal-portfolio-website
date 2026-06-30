@@ -8,7 +8,7 @@ interface TimelineEntry {
   title: string;
   org: string;
   description: string;
-  accentColor: string | null;
+  accentColor: string;
 }
 
 const work: TimelineEntry[] = [
@@ -167,7 +167,24 @@ const parseDate = (dateStr: string) => {
   return monthIndex(year, month);
 };
 
-const allEntries = [...work, ...education];
+const allEntries = [
+  ...work.map((entry) => ({
+    ...entry,
+    lineColumn: 2,
+    cardColumn: 1,
+    cardLocation: "left" as "left" | "right",
+    prefix: "work",
+  })),
+  ...education.map((entry) => ({
+    ...entry,
+    lineColumn: 4,
+    cardColumn: 5,
+    cardLocation: "right" as "left" | "right",
+    prefix: "edu",
+  })),
+];
+allEntries.sort((a, b) => parseDate(b.start) - parseDate(a.start));
+
 const earliestMonthIdx = Math.min(...allEntries.map((e) => parseDate(e.start))) - 1;
 const earliestYear = Math.floor(earliestMonthIdx / 12);
 const totalMonths = currentMonthIdx - earliestMonthIdx + 1;
@@ -247,23 +264,7 @@ for (let y = currentYear; y >= earliestYear; y--) {
       <div class="line" style={`grid-row: 2 / ${totalMonths + 2}; grid-column: 2`}></div>
       <div class="line" style={`grid-row: 2 / ${totalMonths + 2}; grid-column: 4`}></div>
 
-      <TimelineColumn
-        entries={work}
-        lineColumn={2}
-        cardColumn={1}
-        cardLocation="left"
-        getRow={getRow}
-        getEndRow={getEndRow}
-      />
-
-      <TimelineColumn
-        entries={education}
-        lineColumn={4}
-        cardColumn={5}
-        cardLocation="right"
-        getRow={getRow}
-        getEndRow={getEndRow}
-      />
+      <TimelineColumn entries={allEntries} getRow={getRow} getEndRow={getEndRow} />
     </div>
   </section>
 </BaseLayout>

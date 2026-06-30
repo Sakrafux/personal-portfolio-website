@@ -9,3 +9,9 @@
 ## Icons
 
 Variations created via https://realfavicongenerator.net/
+
+## TODOs
+
+### Career
+- need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
+- sticky entries moving with the scrolling?
