@@ -94,6 +94,10 @@ a:hover {
     text-decoration: underline;
 }
 
+a.underline {
+    text-decoration: underline;
+}
+
 /* Muted Navigation Links (used in NavBar & Footer) */
 .muted-link {
     color: var(--color-text-muted);
@@ -134,20 +138,11 @@ a:hover {
     padding: 0 1.5rem;
 }
 
-.card {
-    background-color: var(--color-bg-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-/* Code Syntax Styling */
-code {
-    font-family: var(--font-mono);
-    background-color: var(--color-bg-surface);
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    font-size: 0.9em;
-    color: var(--color-text-primary);
+hr {
+    font-size: 0;
+    border: 0;
+    height: 1px;
+    color: var(--color-border);
+    background-color: var(--color-border);
+    margin: 0 -1.5rem;
 }
