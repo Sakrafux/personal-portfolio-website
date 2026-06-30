@@ -9,6 +9,7 @@ interface TimelineEntry {
   org: string;
   description: string;
   accentColor: string;
+  rowAdjustment?: number;
 }
 
 const work: TimelineEntry[] = [
@@ -103,6 +104,7 @@ const education: TimelineEntry[] = [
     description:
       "Integration of textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
     accentColor: "var(--color-accent-secondary)",
+    rowAdjustment: 1,
   },
   {
     start: "2021-10",
@@ -128,6 +130,7 @@ const education: TimelineEntry[] = [
     org: "SAP",
     description: "...",
     accentColor: "var(--color-accent-secondary)",
+    rowAdjustment: -2,
   },
   {
     start: "2021-04",
@@ -158,6 +161,7 @@ const education: TimelineEntry[] = [
 const now = new Date();
 const currentYear = now.getFullYear();
 const currentMonth = now.getMonth() + 1;
+const nowDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}`;
 
 const monthIndex = (year: number, month: number) => year * 12 + (month - 1);
 const currentMonthIdx = monthIndex(currentYear, currentMonth);
@@ -183,7 +187,7 @@ const allEntries = [
     prefix: "edu",
   })),
 ];
-allEntries.sort((a, b) => parseDate(b.start) - parseDate(a.start));
+allEntries.sort((a, b) => parseDate(b.end ?? nowDate) - parseDate(a.end ?? nowDate));
 
 const earliestMonthIdx = Math.min(...allEntries.map((e) => parseDate(e.start))) - 1;
 const earliestYear = Math.floor(earliestMonthIdx / 12);
@@ -191,7 +195,6 @@ const totalMonths = currentMonthIdx - earliestMonthIdx + 1;
 
 // +1 for header; +1 because of CSS grid row indexing
 const getRow = (dateStr: string) => currentMonthIdx - parseDate(dateStr) + 2;
-const nowDate = `${currentYear}-${String(currentMonth).padStart(2, "0")}`;
 
 const addMonth = (dateStr: string) => {
   let [year, month] = dateStr.split("-").map(Number);

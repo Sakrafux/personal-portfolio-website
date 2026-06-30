@@ -1,8 +1,6 @@
 ---
 // TODO need to consider the fact that this is static, i.e., how can I show always an expanding timeline
 
-// TODO sticky entries moving with the scrolling?
-
 interface TimelineEntry {
   start: string;
   end: string | null;
@@ -10,6 +8,7 @@ interface TimelineEntry {
   org: string;
   description: string;
   accentColor: string;
+  rowAdjustment?: number;
   lineColumn: number;
   cardColumn: number;
   cardLocation: "left" | "right";
@@ -58,15 +57,23 @@ const formatDateRange = (start: string, end: string | null) => {
     const { accentColor, lineColumn, cardColumn, cardLocation, prefix } = entry;
 
     const id = `${prefix}-${i}`;
+    // Somewhat confusing, but the timeline start is chronologically further in the past and
+    // therefore at a higher row number
     const startRow = getRow(entry.start);
     const endRow = getEndRow(entry) - (entry.end ? 0 : 1);
     const differentMonths = entry.start !== entry.end;
+
+    let rowAdjustment = entry.rowAdjustment ?? 0;
+    if (!entry.end || !differentMonths) {
+      rowAdjustment--;
+    }
 
     return (
       <>
         {startRow > endRow && differentMonths && (
           <div
             class={`duration ${!entry.end ? "ongoing" : ""}`}
+            data-entry-id={id}
             style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; background-color: ${accentColor}`}
           />
         )}
@@ -79,7 +86,8 @@ const formatDateRange = (start: string, end: string | null) => {
         {entry.end && differentMonths && (
           <div
             class="dot"
-            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${accentColor}`}
+            data-entry-id={id}
+            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${accentColor}; --chosen-accent-color: ${accentColor}`}
             title={entry.end ? formatDate(entry.end) : "Present"}
           />
         )}
@@ -89,7 +97,7 @@ const formatDateRange = (start: string, end: string | null) => {
           tabindex="0"
           role="button"
           aria-expanded="false"
-          style={`grid-row: ${startRow}; grid-column: ${cardColumn}; --chosen-accent-color: ${accentColor}`}
+          style={`grid-row: ${endRow + rowAdjustment + 2}; grid-column: ${cardColumn}; --chosen-accent-color: ${accentColor}`}
         >
           <span class="date-range" style={`color: ${entry.accentColor}`}>
             {formatDateRange(entry.start, entry.end)}
@@ -115,12 +123,16 @@ const formatDateRange = (start: string, end: string | null) => {
       c.setAttribute("aria-expanded", "false");
     });
     document.querySelectorAll(".dot.selected").forEach((d) => d.classList.remove("selected"));
+    document.querySelectorAll(".duration.selected").forEach((d) => d.classList.remove("selected"));
 
     if (!isExpanded) {
       card.classList.add("expanded");
       card.setAttribute("aria-expanded", "true");
       document
         .querySelectorAll(`.dot[data-entry-id="${id}"]`)
+        .forEach((d) => d.classList.add("selected"));
+      document
+        .querySelectorAll(`.duration[data-entry-id="${id}"]`)
         .forEach((d) => d.classList.add("selected"));
     }
   }
@@ -152,6 +164,10 @@ const formatDateRange = (start: string, end: string | null) => {
     position: relative;
   }
 
+  .duration.selected {
+    width: 4px;
+  }
+
   .dot {
     width: 12px;
     height: 12px;
@@ -174,10 +190,13 @@ const formatDateRange = (start: string, end: string | null) => {
     height: 14px;
     box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.2);
     animation: pulse 2s ease-in-out infinite;
+    z-index: 10;
   }
 
   .dot.selected {
     background-color: var(--chosen-accent-color);
+    z-index: 5;
+    cursor: pointer;
   }
 
   @keyframes pulse {
