@@ -1,0 +1,200 @@
+---
+import type { SkillGroup, SkillLevel } from "@/data/skills.ts";
+import { skillContexts, skillLevels } from "@/data/skills.ts";
+
+interface Props {
+  groups: SkillGroup[];
+}
+
+const { groups } = Astro.props;
+
+const levelLabel: Record<SkillLevel, string> = {
+  familiar: "familiar",
+  regular: "regular use",
+  heavy: "heavy / daily use",
+};
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+---
+
+<section class="container skill-matrix">
+  <ul class="legend" aria-label="Skill level legend">
+    {
+      skillLevels.map(({ level, label }) => (
+        <li class="legend-item">
+          <span class={`symbol ${level}`} aria-hidden="true" />
+          <span>{label}</span>
+        </li>
+      ))
+    }
+    <li class="legend-item">
+      <span class="symbol-slot" aria-hidden="true"></span>
+      <span>not used (blank cell)</span>
+    </li>
+  </ul>
+
+  <table class="skills-table">
+    <caption class="sr-only">
+      Technologies grouped by category, showing usage level across work, education, and personal
+      contexts.
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" class="skill-col">Skill</th>
+        {
+          skillContexts.map((ctx) => (
+            <th scope="col" class="ctx-col">
+              {capitalize(ctx)}
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    {
+      groups.map((group) => (
+        <tbody>
+          <tr>
+            <th colspan={skillContexts.length + 1} class="group-header">
+              {group.title}
+            </th>
+          </tr>
+          {group.skills.map((skill) => (
+            <tr>
+              <th scope="row" class="skill-name">
+                {skill.name}
+              </th>
+              {skillContexts.map((ctx) => {
+                const level = skill.contexts[ctx];
+                return (
+                  <td class="ctx-cell">
+                    {level && (
+                      <Fragment>
+                        <span class="sr-only">{levelLabel[level]}</span>
+                        <span class={`symbol ${level}`} aria-hidden="true" />
+                      </Fragment>
+                    )}
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      ))
+    }
+  </table>
+</section>
+
+<style>
+  .skill-matrix {
+    padding: 1.5rem 1.5rem 3rem;
+  }
+
+  .legend {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0 0 1.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-surface);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .symbol {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--color-accent);
+    box-sizing: border-box;
+    flex-shrink: 0;
+  }
+
+  .symbol-slot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  .symbol.familiar {
+    background-color: transparent;
+  }
+
+  .symbol.regular {
+    background-image: linear-gradient(to right, var(--color-accent) 50%, transparent 50%);
+  }
+
+  .symbol.heavy {
+    background-color: var(--color-accent);
+  }
+
+  .skills-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.95rem;
+  }
+
+  .skills-table th,
+  .skills-table td {
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+    text-align: center;
+  }
+
+  .skills-table .skill-col,
+  .skills-table .skill-name {
+    text-align: left;
+  }
+
+  .skills-table thead th {
+    position: sticky;
+    top: var(--navbar-height);
+    height: var(--table-header-height);
+    z-index: 3;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-bottom: 2px solid var(--color-border);
+    background-color: var(--color-bg-main);
+  }
+
+  .skills-table .ctx-col {
+    width: 90px;
+  }
+
+  .skills-table .group-header {
+    position: sticky;
+    top: calc(var(--navbar-height) + var(--table-header-height));
+    z-index: 2;
+    text-align: left;
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: var(--color-bg-surface);
+    border-bottom: 2px solid var(--color-border);
+    padding-top: 0.9rem;
+  }
+
+  .skills-table .skill-name {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .skills-table tbody tr:hover {
+    background-color: var(--color-bg-surface);
+  }
+</style>

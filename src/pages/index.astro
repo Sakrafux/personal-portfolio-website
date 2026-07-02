@@ -1,21 +1,25 @@
 ---
-import HomeTimeline from "@/components/HomeTimeline.astro";
+import HomeCareer from "@/components/HomeCareer.astro";
+import HomeSkills from "@/components/HomeSkills.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
   <section class="container">Home</section>
 
-  <HomeTimeline />
+  <HomeCareer />
+
+  <HomeSkills />
 
   <section class="container">
     <hr />
     <p style="margin-top: 2rem">
-      Download the CV as a PDF &rarr; <a
+      Download the CV as a PDF &rarr; [<a
         class="underline"
-        href="/documents/CV_english.pdf"
-        download="CV_Andreas_Hell.pdf">download</a
-      >
+        href="/documents/CV_deutsch.pdf"
+        download="CV_Andreas_Hell.pdf">de</a
+      >][<a class="underline" href="/documents/CV_english.pdf" download="CV_Andreas_Hell.pdf">en</a
+      >]
     </p>
   </section>
 </BaseLayout>

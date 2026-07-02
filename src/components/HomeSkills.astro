@@ -1,0 +1,23 @@
+---
+import SkillMatrix from "@/components/SkillMatrix.astro";
+import { filterSkillScore, skillGroups, sortSkillGroups } from "@/data/skills.ts";
+
+const groups = filterSkillScore(sortSkillGroups(skillGroups)).filter((group) => group.important);
+---
+
+<section class="container">
+  <h1>Skills</h1>
+  <p>
+    Where and how much I have used each technology across work, education, and personal projects.
+  </p>
+</section>
+
+<SkillMatrix groups={groups} />
+
+<section class="container">
+  <p>
+    For a more thorough exploration, refer to the dedicated <a href="/skills" class="underline"
+      >Skills</a
+    > page.
+  </p>
+</section>
