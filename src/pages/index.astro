@@ -1,19 +1,28 @@
 ---
 import HomeCareer from "@/components/HomeCareer.astro";
+import HomeProjects from "@/components/HomeProjects.astro";
 import HomeSkills from "@/components/HomeSkills.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <section class="container">Home</section>
-
   <HomeCareer />
+
+  <div class="container">
+    <hr class="separator" />
+  </div>
+
+  <HomeProjects />
+
+  <div class="container">
+    <hr class="separator" />
+  </div>
 
   <HomeSkills />
 
   <section class="container">
-    <hr />
-    <p style="margin-top: 2rem">
+    <hr class="separator" />
+    <p style="margin-top: 2.5rem">
       Download the CV as a PDF &rarr; [<a
         class="underline"
         href="/documents/CV_deutsch.pdf"
@@ -23,3 +32,9 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
     </p>
   </section>
 </BaseLayout>
+
+<style>
+  .separator {
+    margin: 1.5rem -1.5rem;
+  }
+</style>

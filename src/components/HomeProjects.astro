@@ -1,0 +1,21 @@
+---
+import { projects } from "@/data/projects.ts";
+import ProjectList from "@/components/ProjectList.astro";
+
+const importantProjects = projects.filter((project) => project.important);
+---
+
+<section class="container">
+  <h1>Projects</h1>
+  <p>A selection of projects from work, education, and personal work.</p>
+</section>
+
+<ProjectList projects={importantProjects} />
+
+<section class="container">
+  <p>
+    For a more thorough exploration, refer to the dedicated <a href="/projects" class="underline"
+      >Projects</a
+    > page.
+  </p>
+</section>

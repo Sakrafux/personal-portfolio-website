@@ -1,0 +1,23 @@
+---
+import type { Project } from "@/data/projects.ts";
+import ProjectCard from "@/components/ProjectCard.astro";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<div class="project-list container">
+  {projects.map((project) => <ProjectCard project={project} />)}
+</div>
+
+<style>
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+  }
+</style>

@@ -20,3 +20,6 @@ Variations created via https://realfavicongenerator.net/
 ### Skills
 - maybe need advanced rows that show where exactly the skills were actually acquired
   - similarly, maybe the career section should include skill tags when expanding an entry
+
+### Projects
+- list of actual projects

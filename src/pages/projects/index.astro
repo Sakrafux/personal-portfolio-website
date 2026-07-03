@@ -1,7 +1,14 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
+import { projects } from "@/data/projects.ts";
+import ProjectList from "@/components/ProjectList.astro";
 ---
 
 <BaseLayout>
-  <section class="container">Projects</section>
+  <section class="container">
+    <h1>Projects</h1>
+    <p>A collection of projects from work, education, and personal work.</p>
+  </section>
+
+  <ProjectList projects={projects} />
 </BaseLayout>
