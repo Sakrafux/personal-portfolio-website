@@ -149,6 +149,11 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
             Demo &rarr;
           </a>
         )}
+        {project.links.doc && (
+          <a href={project.links.doc} class="underline" target="_blank" rel="noopener noreferrer">
+            Documentation &rarr;
+          </a>
+        )}
       </div>
     )
   }

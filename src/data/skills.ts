@@ -48,6 +48,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "Bash", contexts: { private: "familiar" } },
       { name: "HTML", contexts: { work: "regular", education: "regular", private: "regular" } },
       { name: "CSS", contexts: { work: "regular", education: "regular", private: "regular" } },
+      { name: "Cypher", contexts: { private: "familiar" } },
     ],
   },
   {
@@ -67,6 +68,7 @@ export const skillGroups: SkillGroup[] = [
       { name: "React", contexts: { work: "regular", private: "heavy" } },
       { name: "Next.js", contexts: { work: "familiar", private: "familiar" } },
       { name: "Astro", contexts: { private: "heavy" } },
+      { name: "Tailwind CSS", contexts: { work: "regular", private: "regular" } },
     ],
   },
   {
@@ -116,7 +118,10 @@ export const skillGroups: SkillGroup[] = [
         name: "Service-oriented Architecture (SOA)",
         contexts: { work: "regular", education: "familiar" },
       },
-      { name: "Event-Driven Architecture (EDA)", contexts: { work: "familiar" } },
+      {
+        name: "Event-Driven Architecture (EDA)",
+        contexts: { work: "familiar", education: "regular" },
+      },
       { name: "REST", contexts: { work: "heavy", education: "regular", private: "heavy" } },
       {
         name: "WebSockets",
@@ -135,6 +140,10 @@ export const skillGroups: SkillGroup[] = [
       },
       { name: "Hexagonal", contexts: { private: "regular" } },
       { name: "Serverless", contexts: { education: "familiar", private: "familiar" } },
+      {
+        name: "Model Context Protocol (MCP)",
+        contexts: { work: "familiar", education: "heavy" },
+      },
     ],
   },
   {

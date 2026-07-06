@@ -2,7 +2,7 @@
 import { projects, sortProjects } from "@/data/projects.ts";
 import ProjectList from "@/components/ProjectList.astro";
 
-const importantProjects = sortProjects(projects.filter((project) => project.important));
+const importantProjects = sortProjects(projects.filter((project) => project.important)).slice(0, 5);
 ---
 
 <section class="container">
