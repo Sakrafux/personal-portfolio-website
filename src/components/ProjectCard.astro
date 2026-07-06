@@ -47,6 +47,15 @@ const contextColor: Record<SkillContext, string> = {
   education: "var(--color-accent-secondary)",
   private: "var(--color-text-muted)",
 };
+
+const maxVisibleSkills = 5;
+const visibleSkills = project.skills.slice(0, maxVisibleSkills);
+const hiddenSkills = project.skills.slice(maxVisibleSkills);
+const hasHiddenSkills = hiddenSkills.length > 0;
+
+const firstParagraph = project.description[0];
+const extraParagraphs = project.description.slice(1);
+const hasExtraParagraphs = extraParagraphs.length > 0;
 ---
 
 <article class="project-card">
@@ -65,10 +74,66 @@ const contextColor: Record<SkillContext, string> = {
     {project.org && <span class="org">{project.org}</span>}
   </div>
 
-  <p>{project.description}</p>
+  <div class="description-block">
+    <p>{firstParagraph}</p>
+    {extraParagraphs.map((paragraph) => <p class="paragraph-hidden">{paragraph}</p>)}
+    {
+      hasExtraParagraphs && (
+        <button
+          class="desc-toggle toggle-more"
+          tabindex="0"
+          role="button"
+          aria-expanded="false"
+          data-toggle-scope=".description-block"
+        >
+          Read more
+        </button>
+      )
+    }
+    {
+      hasExtraParagraphs && (
+        <button
+          class="desc-toggle toggle-less"
+          tabindex="0"
+          role="button"
+          aria-expanded="true"
+          data-toggle-scope=".description-block"
+        >
+          Show less
+        </button>
+      )
+    }
+  </div>
 
   <ul class="skill-tags">
-    {project.skills.map((skill) => <li>{skill}</li>)}
+    {visibleSkills.map((skill) => <li>{skill}</li>)}
+    {
+      hasHiddenSkills && (
+        <li
+          class="skill-toggle toggle-more"
+          tabindex="0"
+          role="button"
+          aria-expanded="false"
+          data-toggle-scope=".skill-tags"
+        >
+          +{hiddenSkills.length} more
+        </li>
+      )
+    }
+    {hasHiddenSkills && hiddenSkills.map((skill) => <li class="skill-hidden">{skill}</li>)}
+    {
+      hasHiddenSkills && (
+        <li
+          class="skill-toggle toggle-less"
+          tabindex="0"
+          role="button"
+          aria-expanded="true"
+          data-toggle-scope=".skill-tags"
+        >
+          Show less
+        </li>
+      )
+    }
   </ul>
 
   {
@@ -125,7 +190,7 @@ const contextColor: Record<SkillContext, string> = {
   }
 
   .card-header {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
   .project-card h3 {
@@ -142,7 +207,29 @@ const contextColor: Record<SkillContext, string> = {
   .project-card p {
     font-size: 0.92rem;
     line-height: 1.5;
-    margin-bottom: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .description-block:not(.expanded) .paragraph-hidden,
+  .description-block:not(.expanded) .toggle-less {
+    display: none;
+  }
+
+  .description-block.expanded .toggle-more {
+    display: none;
+  }
+
+  .description-block .desc-toggle {
+    cursor: pointer;
+    user-select: none;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    text-decoration: underline;
+    margin-bottom: 0.5rem;
   }
 
   .skill-tags {
@@ -163,6 +250,29 @@ const contextColor: Record<SkillContext, string> = {
     padding: 0.1rem 0.5rem;
   }
 
+  .skill-tags:not(.expanded) .skill-hidden,
+  .skill-tags:not(.expanded) .toggle-less {
+    display: none;
+  }
+
+  .skill-tags.expanded .toggle-more {
+    display: none;
+  }
+
+  .skill-tags .skill-toggle {
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0;
+    border: none;
+    background: none;
+    margin-left: 0.25rem;
+    align-self: center;
+    text-decoration: underline;
+  }
+
   .card-links {
     display: flex;
     gap: 1.25rem;
@@ -170,3 +280,39 @@ const contextColor: Record<SkillContext, string> = {
     font-size: 0.85rem;
   }
 </style>
+
+<script>
+  function toggleSection(toggle: Element) {
+    const scope = toggle.getAttribute("data-toggle-scope");
+    if (!scope) return;
+    const container = toggle.closest(scope);
+    if (!container) return;
+
+    const isExpanded = container.classList.contains("expanded");
+
+    if (isExpanded) {
+      container.classList.remove("expanded");
+      toggle.setAttribute("aria-expanded", "false");
+    } else {
+      container.classList.add("expanded");
+      toggle.setAttribute("aria-expanded", "true");
+    }
+  }
+
+  function handleToggleInteraction(e: Event) {
+    const target = (e.target as Element)?.closest("[data-toggle-scope]");
+    if (!target) return;
+    e.stopPropagation();
+    toggleSection(target);
+  }
+
+  document.addEventListener("click", handleToggleInteraction);
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const target = (e.target as Element)?.closest("[data-toggle-scope]");
+    if (!target) return;
+    e.preventDefault();
+    toggleSection(target);
+  });
+</script>

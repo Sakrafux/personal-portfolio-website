@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import { projects } from "@/data/projects.ts";
+import { projects, sortProjects } from "@/data/projects.ts";
 import ProjectList from "@/components/ProjectList.astro";
 ---
 
@@ -10,5 +10,5 @@ import ProjectList from "@/components/ProjectList.astro";
     <p>A collection of projects from work, education, and personal work.</p>
   </section>
 
-  <ProjectList projects={projects} />
+  <ProjectList projects={sortProjects(projects)} />
 </BaseLayout>

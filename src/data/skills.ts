@@ -46,6 +46,8 @@ export const skillGroups: SkillGroup[] = [
       { name: "Kotlin", contexts: { private: "familiar" } },
       { name: "ABAP", contexts: { education: "familiar" } },
       { name: "Bash", contexts: { private: "familiar" } },
+      { name: "HTML", contexts: { work: "regular", education: "regular", private: "regular" } },
+      { name: "CSS", contexts: { work: "regular", education: "regular", private: "regular" } },
     ],
   },
   {
@@ -125,6 +127,13 @@ export const skillGroups: SkillGroup[] = [
         contexts: { work: "familiar", education: "regular", private: "familiar" },
       },
       { name: "CQRS", contexts: { work: "familiar" } },
+      { name: "Microfrontend", contexts: { work: "familiar" } },
+      { name: "N-Tier", contexts: { work: "regular", private: "regular" } },
+      {
+        name: "Vertical Slice",
+        contexts: { work: "regular", education: "regular", private: "regular" },
+      },
+      { name: "Hexagonal", contexts: { private: "regular" } },
       { name: "Serverless", contexts: { education: "familiar", private: "familiar" } },
     ],
   },

@@ -1,8 +1,8 @@
 ---
-import { projects } from "@/data/projects.ts";
+import { projects, sortProjects } from "@/data/projects.ts";
 import ProjectList from "@/components/ProjectList.astro";
 
-const importantProjects = projects.filter((project) => project.important);
+const importantProjects = sortProjects(projects.filter((project) => project.important));
 ---
 
 <section class="container">
