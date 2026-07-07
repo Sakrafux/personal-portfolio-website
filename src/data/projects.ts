@@ -362,6 +362,18 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    title: "Internal Real Estate Management Sub-System",
+    description: [
+      "Developing a sub-system for the internal real estate management software ecosystem for a local landlord and real estate agency.",
+    ],
+    context: "work",
+    start: "2021-08",
+    end: "2021-12",
+    skills: ["Java", "Spring Boot", "SQL", "JavaScript", "React", "Docker", "JUnit & Mockito"],
+    links: {},
+    important: true,
+  },
+  {
     title:
       "Project as part of the IT modernization at the Austrian Social Insurance Institution for the Self-Employed (SVS)",
     description: [

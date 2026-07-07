@@ -4,9 +4,20 @@ import type { SkillContext } from "@/data/skills.ts";
 
 interface Props {
   project: Project;
+  linkable?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, linkable = false } = Astro.props;
+
+const slugify = (s: string) =>
+  s
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+const headingId = linkable ? slugify(project.title) : undefined;
 
 const monthNames = [
   "Jan",
@@ -58,7 +69,7 @@ const extraParagraphs = project.description.slice(1);
 const hasExtraParagraphs = extraParagraphs.length > 0;
 ---
 
-<article class="project-card">
+<article class="project-card" id={headingId}>
   <div class="card-meta">
     <span
       class="context-badge"
@@ -70,7 +81,29 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
   </div>
 
   <div class="card-header">
-    <h3>{project.title}</h3>
+    <h3>
+      {project.title}
+      {
+        linkable && (
+          <a href={`#${headingId}`} class="heading-anchor" aria-label={`Link to ${project.title}`}>
+            <svg
+              viewBox="0 0 24 24"
+              width="18"
+              height="18"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+            </svg>
+          </a>
+        )
+      }
+    </h3>
     {project.org && <span class="org">{project.org}</span>}
   </div>
 
@@ -165,6 +198,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     border: 1px solid var(--color-border);
     padding: 1rem 1.25rem;
     transition: border-color 0.2s ease;
+    scroll-margin-top: calc(var(--navbar-height) + 1rem);
   }
 
   .project-card:hover {
@@ -201,6 +235,22 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
   .project-card h3 {
     font-size: 1.1rem;
     margin-bottom: 0.15rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .heading-anchor {
+    display: inline-flex;
+    color: var(--color-text-muted);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    text-decoration: none;
+  }
+
+  .project-card h3:hover .heading-anchor,
+  .heading-anchor:focus {
+    opacity: 1;
   }
 
   .org {

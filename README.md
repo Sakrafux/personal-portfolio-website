@@ -13,7 +13,7 @@ Variations created via https://realfavicongenerator.net/
 ## TODOs
 
 - General alignment necessary
-  - coding styles
+  - coding styles (possibly also extract some common logic)
   - texts and descriptions
 
 ### Career

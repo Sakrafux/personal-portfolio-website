@@ -4,13 +4,14 @@ import ProjectCard from "@/components/ProjectCard.astro";
 
 interface Props {
   projects: Project[];
+  linkable?: boolean;
 }
 
-const { projects } = Astro.props;
+const { projects, linkable = false } = Astro.props;
 ---
 
 <div class="project-list container">
-  {projects.map((project) => <ProjectCard project={project} />)}
+  {projects.map((project) => <ProjectCard project={project} linkable={linkable} />)}
 </div>
 
 <style>
