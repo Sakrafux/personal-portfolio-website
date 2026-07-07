@@ -12,6 +12,10 @@ Variations created via https://realfavicongenerator.net/
 
 ## TODOs
 
+- General alignment necessary
+  - coding styles
+  - texts and descriptions
+
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
   - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline

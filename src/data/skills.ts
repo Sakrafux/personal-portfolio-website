@@ -56,6 +56,7 @@ export const skillGroups: SkillGroup[] = [
     important: true,
     skills: [
       { name: "Spring Boot", contexts: { work: "heavy", private: "familiar" } },
+      { name: "Spring", contexts: { work: "familiar" } },
       { name: "Quarkus", contexts: { private: "familiar" } },
       { name: "Micronaut", contexts: { private: "familiar" } },
       { name: "FastAPI", contexts: { private: "familiar" } },
