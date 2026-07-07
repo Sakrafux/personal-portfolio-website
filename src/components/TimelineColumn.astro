@@ -1,5 +1,6 @@
 ---
 import type { TimelineEntryExtended } from "@/data/career-timeline.ts";
+import { projects } from "@/data/projects.ts";
 
 interface Props {
   entries: TimelineEntryExtended[];
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const { entries, getRow, getEndRow } = Astro.props;
+
+const projectMap = new Map(projects.map((p) => [p.id, p.title]));
 
 const monthNames = [
   "Jan",
@@ -42,6 +45,13 @@ const formatDateRange = (start: string, end: string | null) => {
   entries.map((entry, i) => {
     const { accentColor, lineColumn, cardColumn, cardLocation, prefix } = entry;
 
+    const color =
+      accentColor === "primary" ? "var(--color-accent)" : "var(--color-accent-secondary)";
+    const colorHover =
+      accentColor === "primary"
+        ? "var(--color-accent-hover)"
+        : "var(--color-accent-secondary-hover)";
+
     const id = `${prefix}-${i}`;
     // Somewhat confusing, but the timeline start is chronologically further in the past and
     // therefore at a higher row number
@@ -60,20 +70,20 @@ const formatDateRange = (start: string, end: string | null) => {
           <div
             class={`duration ${!entry.end ? "ongoing" : ""}`}
             data-entry-id={id}
-            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; background-color: ${accentColor}`}
+            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; background-color: ${color}`}
           />
         )}
         <div
           class={`dot start ${entry.end ? "" : "active"}`}
           data-entry-id={id}
-          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; border-color: ${accentColor}; --chosen-accent-color: ${accentColor}`}
+          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; border-color: ${color}; --chosen-accent-color: ${color}`}
           title={formatDate(entry.start)}
         />
         {entry.end && differentMonths && (
           <div
             class="dot"
             data-entry-id={id}
-            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${accentColor}; --chosen-accent-color: ${accentColor}`}
+            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${color}; --chosen-accent-color: ${color}`}
             title={entry.end ? formatDate(entry.end) : "Present"}
           />
         )}
@@ -83,9 +93,9 @@ const formatDateRange = (start: string, end: string | null) => {
           tabindex="0"
           role="button"
           aria-expanded="false"
-          style={`grid-row: ${endRow + rowAdjustment + 2}; grid-column: ${cardColumn}; --chosen-accent-color: ${accentColor}`}
+          style={`grid-row: ${endRow + rowAdjustment + 2}; grid-column: ${cardColumn}; --chosen-accent-color: ${color}; --chosen-accent-color-hover: ${colorHover}`}
         >
-          <span class="date-range" style={`color: ${entry.accentColor}`}>
+          <span class="date-range" style={`color: ${color}`}>
             {formatDateRange(entry.start, entry.end)}
           </span>
           <div class="card-header">
@@ -96,6 +106,23 @@ const formatDateRange = (start: string, end: string | null) => {
             </div>
           </div>
           {entry.description && <p>{entry.description}</p>}
+          {entry.projectRefs && entry.projectRefs.length > 0 && (
+            <div class="related-projects">
+              <ul>
+                {entry.projectRefs.map((ref) => {
+                  const projectTitle = projectMap.get(ref);
+                  if (!projectTitle) return null;
+                  return (
+                    <li>
+                      <a href={`/projects#${ref}`} class="underline">
+                        {projectTitle}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </>
     );
@@ -131,6 +158,8 @@ const formatDateRange = (start: string, end: string | null) => {
   function handleInteraction(e: Event) {
     const target = (e.target as Element)?.closest("[data-entry-id]");
     if (!target) return;
+    // Don't toggle the card when interacting with a link inside it
+    if ((e.target as Element)?.closest(".related-projects a")) return;
     const id = target.getAttribute("data-entry-id");
     if (id) toggleEntry(id);
   }
@@ -139,6 +168,8 @@ const formatDateRange = (start: string, end: string | null) => {
 
   document.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;
+    // Let links inside cards activate normally
+    if ((e.target as Element)?.closest(".related-projects a")) return;
     handleInteraction(e);
     if ((e.target as Element)?.closest("[data-entry-id]")) e.preventDefault();
   });
@@ -202,6 +233,7 @@ const formatDateRange = (start: string, end: string | null) => {
 
   .timeline-card {
     --chosen-accent-color: var(--color-accent);
+    --chosen-accent-color-hover: var(--color-accent-hover);
     width: calc(100% - 1rem);
     align-self: start;
     background-color: var(--color-bg-surface);
@@ -225,7 +257,8 @@ const formatDateRange = (start: string, end: string | null) => {
   }
 
   .timeline-card:not(.expanded) .date-range,
-  .timeline-card:not(.expanded) p {
+  .timeline-card:not(.expanded) p,
+  .timeline-card:not(.expanded) .related-projects {
     display: none;
   }
 
@@ -289,6 +322,43 @@ const formatDateRange = (start: string, end: string | null) => {
     margin-bottom: 0;
     line-height: 1.5;
     margin-top: 0.5rem;
+  }
+
+  .related-projects {
+    margin-top: 0.5rem;
+  }
+
+  .related-label {
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .related-projects ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .related-projects li {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  .related-projects a {
+    color: var(--chosen-accent-color);
+  }
+
+  .related-projects a:hover {
+    color: var(--chosen-accent-color-hover);
   }
 
   @media (prefers-reduced-motion: reduce) {

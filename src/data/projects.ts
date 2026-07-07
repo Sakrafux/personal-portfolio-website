@@ -1,6 +1,7 @@
 import type { SkillContext } from "@/data/skills.ts";
 
 export interface Project {
+  id: string;
   title: string;
   description: string[];
   context: SkillContext;
@@ -25,6 +26,7 @@ export const sortProjects = (projects: Project[]): Project[] =>
 
 export const projects: Project[] = [
   {
+    id: "personal-portfolio-website",
     title: "Personal Portfolio Website",
     description: [
       "A personal portfolio website to showcase my career, skills, and projects. Built with Astro for static generation, focusing on performance and minimal JavaScript.",
@@ -40,6 +42,7 @@ export const projects: Project[] = [
     important: false,
   },
   {
+    id: "glsp-langium-integration",
     title: "Interweaving Graphical and Textual Modelling using GLSP and Langium",
     description: [
       "This project introduces an open-source framework designed to seamlessly integrate text-based grammar support into web-based graphical modeling environments. It bridges the gap between two distinct modeling paradigms by connecting the Graphical Language Server Platform (GLSP), used for diagrammatic views, with Langium, a parsing workbench for textual domain-specific languages. By embedding lightweight Monaco text editors directly into graphical diagram elements, the framework allows language engineers to implement advanced, context-aware textual sub-languages. These embedded editors provide rich IDE features like autocomplete, syntax highlighting, and live validation markers directly within the graphical layout.",
@@ -56,6 +59,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "mcp-server-glsp",
     title:
       "Master's Thesis - Design and Implementation of a Model Context Protocol (MCP) Server for the Graphical Language Server Platform (GLSP)",
     description: [
@@ -82,6 +86,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "glsp-browser-sandbox",
     title:
       "Bachelor's Thesis - Browser-only implementation of GLSP as a digital sandbox environment",
     description: [
@@ -109,6 +114,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "realworld-tech-comparison",
     title: "RealWorld Tech Comparison",
     description: [
       "A full-stack evaluation project designed to analyze how different backend and frontend technologies, as well as architectures, measure up under real-world conditions. A rigorous specification for a simple blog application (Conduit) is implemented across multiple tech stacks. This allows for direct comparison of various aspects. On the one hand, the developer experience such as code boilerplate, type safety, and ecosystem maturity, as well as raw performance metrics like response times, resource utilization, and throughput. The resulting data serves as a practical guide for choosing the optimal architecture based on measurable trade-offs, while also providing some insights into developer ergonomics.",
@@ -153,6 +159,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "family-tree-app",
     title: "Family Tree Web Application",
     description: [
       "This project is a web application for visualizing and managing family trees, designed with a minimal but powerful stack. It combines a Go backend with an embedded graph database and a React + D3.js frontend for interactive visualization.",
@@ -179,6 +186,7 @@ export const projects: Project[] = [
     important: false,
   },
   {
+    id: "rum",
     title: "Real User Monitoring (RUM)",
     description: [
       "As a Backend Software Engineer within the Real User Monitoring (RUM) Core team at Dynatrace, I design and build the core high-load, high-availability ingestion pipelines that capture and process real-time user experience data at scale. Utilizing Java, I prototype, implement, and optimize backend features, ensuring system components maintain peak performance and resilience under heavy loads. Collaborating closely with cross-functional teams and product architects, I take end-to-end ownership of backend services, from initial design and debugging to monitoring and analyzing their live performance directly within the Dynatrace platform.",
@@ -203,6 +211,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "justice-it-modernization",
     title: "Project as part of the IT modernization at the German Federal Ministry of Justice",
     description: [
       "Resurrected after multiple years on ice, this legacy Java project was brought back into development at the behest of the German Federal Ministry of Justice. The mission was two-fold: first, a major modernization effort to upgrade the outdated codebase from Java 11 to Java 17; and second, the successful implementation and completion of the remaining project requirements. Navigating an inherited, unfinished architecture required both deep technical troubleshooting to resolve technical debt and a goal-oriented approach to deliver on a critical public sector mandate.",
@@ -228,6 +237,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "bmf-services",
     title:
       "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
     description: [
@@ -265,6 +275,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "bmf-deadline",
     title:
       "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
     description: [
@@ -304,6 +315,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "bmf-component-library",
     title:
       "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
     description: [
@@ -328,6 +340,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "bmf-camunda-prototype",
     title:
       "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
     description: [
@@ -362,6 +375,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "real-estate-subsystem",
     title: "Internal Real Estate Management Sub-System",
     description: [
       "Developing a sub-system for the internal real estate management software ecosystem for a local landlord and real estate agency.",
@@ -374,6 +388,7 @@ export const projects: Project[] = [
     important: true,
   },
   {
+    id: "svs-it-modernization",
     title:
       "Project as part of the IT modernization at the Austrian Social Insurance Institution for the Self-Employed (SVS)",
     description: [

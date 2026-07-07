@@ -9,15 +9,7 @@ interface Props {
 
 const { project, linkable = false } = Astro.props;
 
-const slugify = (s: string) =>
-  s
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-
-const headingId = linkable ? slugify(project.title) : undefined;
+const headingId = linkable ? project.id : undefined;
 
 const monthNames = [
   "Jan",

@@ -5,9 +5,10 @@ export interface TimelineEntry {
   org: string;
   description: string | null;
   icon: string | null;
-  accentColor: string;
+  accentColor: "primary" | "secondary";
   rowAdjustment?: number;
   important: boolean;
+  projectRefs?: string[];
 }
 
 export interface TimelineEntryExtended extends TimelineEntry {
@@ -25,8 +26,9 @@ export const work: TimelineEntry[] = [
     org: "Dynatrace",
     description: null,
     icon: "/logos/dynatrace_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: true,
+    projectRefs: ["rum"],
   },
   {
     start: "2023-12",
@@ -35,8 +37,9 @@ export const work: TimelineEntry[] = [
     org: "Accenture",
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: true,
+    projectRefs: ["justice-it-modernization", "bmf-services", "bmf-deadline"],
   },
   {
     start: "2022-12",
@@ -45,8 +48,9 @@ export const work: TimelineEntry[] = [
     org: "Accenture",
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: true,
+    projectRefs: ["bmf-deadline", "bmf-component-library"],
   },
   {
     start: "2022-01",
@@ -55,8 +59,9 @@ export const work: TimelineEntry[] = [
     org: "Accenture",
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: true,
+    projectRefs: ["bmf-camunda-prototype", "bmf-deadline"],
   },
   {
     start: "2021-08",
@@ -65,8 +70,9 @@ export const work: TimelineEntry[] = [
     org: "Freelance",
     description: null,
     icon: null,
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: true,
+    projectRefs: ["real-estate-subsystem"],
   },
   {
     start: "2021-02",
@@ -75,8 +81,9 @@ export const work: TimelineEntry[] = [
     org: "Accenture",
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: true,
+    projectRefs: ["svs-it-modernization"],
   },
   {
     start: "2020-07",
@@ -85,7 +92,7 @@ export const work: TimelineEntry[] = [
     org: "Austrian Armed Forces",
     description: null,
     icon: "/logos/bundesheer_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: false,
   },
   {
@@ -95,7 +102,7 @@ export const work: TimelineEntry[] = [
     org: "Wien IT",
     description: null,
     icon: "/logos/wienit_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: false,
   },
   {
@@ -105,7 +112,7 @@ export const work: TimelineEntry[] = [
     org: "SNAP Consulting",
     description: null,
     icon: "/logos/snap_consulting_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: false,
   },
 ];
@@ -119,8 +126,9 @@ export const education: TimelineEntry[] = [
     description:
       "Deepening of my studies with a special focus on Economic Modeling and Information System Engineering.",
     icon: "/logos/tuwien_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: true,
+    projectRefs: ["mcp-server-glsp"],
   },
   {
     start: "2025-07",
@@ -130,9 +138,10 @@ export const education: TimelineEntry[] = [
     description:
       "Integration of textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
     icon: "/logos/kings_college_london_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     rowAdjustment: 1,
     important: true,
+    projectRefs: ["glsp-langium-integration"],
   },
   {
     start: "2021-10",
@@ -142,8 +151,9 @@ export const education: TimelineEntry[] = [
     description:
       "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, to give a broad knowledge basis.",
     icon: "/logos/tuwien_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: true,
+    projectRefs: ["glsp-browser-sandbox"],
   },
   {
     start: "2015-09",
@@ -152,7 +162,7 @@ export const education: TimelineEntry[] = [
     org: "HTL St. Pölten - Grade 1.0",
     description: null,
     icon: "/logos/htl_stpoelten_logo.jpg",
-    accentColor: "var(--color-accent)",
+    accentColor: "primary",
     important: false,
   },
   // Certifications
@@ -163,7 +173,7 @@ export const education: TimelineEntry[] = [
     org: "SAP",
     description: null,
     icon: "/logos/sap_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     rowAdjustment: -2,
     important: false,
   },
@@ -174,7 +184,7 @@ export const education: TimelineEntry[] = [
     org: "Microsoft",
     description: null,
     icon: "/logos/microsoft_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: false,
   },
   {
@@ -184,7 +194,7 @@ export const education: TimelineEntry[] = [
     org: "Oracle",
     description: null,
     icon: "/logos/oracle_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: false,
   },
   {
@@ -194,7 +204,7 @@ export const education: TimelineEntry[] = [
     org: "Cambridge English",
     description: null,
     icon: "/logos/cambridge_university_press_assessment_english_logo.jpg",
-    accentColor: "var(--color-accent-secondary)",
+    accentColor: "secondary",
     important: false,
   },
 ];
