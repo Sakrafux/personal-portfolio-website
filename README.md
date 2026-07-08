@@ -17,6 +17,7 @@ Variations created via https://realfavicongenerator.net/
   - texts and descriptions
 - i18n
 - light/dark theme toggle
+- mobile layout
 
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline

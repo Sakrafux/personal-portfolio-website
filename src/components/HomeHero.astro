@@ -1,0 +1,104 @@
+---
+
+---
+
+<section class="hero-section">
+  <div class="hero">
+    <picture>
+      <source srcset="/images/mount_fuji.webp" type="image/webp" />
+      <img
+        src="/images/mount_fuji.jpg"
+        alt="Mount Fuji"
+        width="2000"
+        height="612"
+        loading="eager"
+        decoding="async"
+      />
+    </picture>
+
+    <div class="overlay">
+      <div class="copy">
+        <h1>Andreas Hell</h1>
+        <p class="title">Full-Stack Developer</p>
+        <p class="tagline">End-to-End Engineering, built to be relied on.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <p>I build reliable software across frontend, backend, data, and deployment.</p>
+    <p>TODO more</p>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+    min-height: calc(100vh - var(--navbar-height));
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero picture {
+    display: contents;
+  }
+
+  .hero img {
+    display: block;
+    width: 100%;
+    height: clamp(140px, 55vh - var(--navbar-height), 55vh - var(--navbar-height));
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .copy {
+    max-width: min(440px, 50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    text-align: left;
+    background-color: rgba(30, 34, 42, 0.6);
+    backdrop-filter: blur(4px);
+  }
+
+  .copy h1 {
+    margin-bottom: 0.25rem;
+    color: var(--color-text-primary);
+    font-size: clamp(2.25rem, 7vw, 4.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+
+  .copy .title {
+    margin-bottom: 0.5rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 2.6vw, 1.75rem);
+    letter-spacing: 0.02em;
+  }
+
+  .copy .tagline {
+    margin-bottom: 0;
+    color: var(--color-text-muted);
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    font-style: italic;
+  }
+</style>

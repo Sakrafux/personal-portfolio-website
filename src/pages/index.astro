@@ -1,11 +1,16 @@
 ---
 import HomeCareer from "@/components/HomeCareer.astro";
+import HomeHero from "@/components/HomeHero.astro";
 import HomeProjects from "@/components/HomeProjects.astro";
 import HomeSkills from "@/components/HomeSkills.astro";
 import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
+  <HomeHero />
+
+  <hr style="margin: 1.5rem 0" />
+
   <HomeCareer />
 
   <div class="container">
