@@ -121,7 +121,7 @@ export const skillGroups: SkillGroup[] = [
       },
       {
         name: "Event-Driven Architecture (EDA)",
-        contexts: { work: "familiar", education: "regular" },
+        contexts: { work: "regular", education: "regular" },
       },
       { name: "REST", contexts: { work: "heavy", education: "regular", private: "heavy" } },
       {

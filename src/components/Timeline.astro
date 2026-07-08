@@ -68,7 +68,7 @@ for (let y = currentYear; y >= earliestYear; y--) {
     class="timeline"
     style={`grid-template-rows: auto repeat(${totalMonths}, var(--row-height)); ${rowHeight ? "--row-height: " + rowHeight : ""}`}
   >
-    <h2 class="header work-header" style="grid-row: 1; grid-column: 1">Work Experience</h2>
+    <h2 class="header work-header" style="grid-row: 1; grid-column: 1">Work</h2>
     <h2 class="header edu-header" style="grid-row: 1; grid-column: 5">Education</h2>
 
     {
@@ -116,6 +116,7 @@ for (let y = currentYear; y >= earliestYear; y--) {
     color: var(--color-text-primary);
     font-size: 1.1rem;
     font-weight: 600;
+    font-family: var(--font-mono);
     padding-bottom: 1rem;
     border-bottom: none;
     margin-top: 0;

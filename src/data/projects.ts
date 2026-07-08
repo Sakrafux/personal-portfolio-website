@@ -212,7 +212,7 @@ export const projects: Project[] = [
   },
   {
     id: "justice-it-modernization",
-    title: "Project as part of the IT modernization at the German Federal Ministry of Justice",
+    title: "IT modernization at the German Federal Ministry of Justice",
     description: [
       "Resurrected after multiple years on ice, this legacy Java project was brought back into development at the behest of the German Federal Ministry of Justice. The mission was two-fold: first, a major modernization effort to upgrade the outdated codebase from Java 11 to Java 17; and second, the successful implementation and completion of the remaining project requirements. Navigating an inherited, unfinished architecture required both deep technical troubleshooting to resolve technical debt and a goal-oriented approach to deliver on a critical public sector mandate.",
     ],
@@ -238,10 +238,9 @@ export const projects: Project[] = [
   },
   {
     id: "bmf-services",
-    title:
-      "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
+    title: "Streamlining independent services at the Austrian BMF",
     description: [
-      "As part of a large-scale IT modernization initiative for the Austrian Ministry of Finance, this project focused on unifying and streamlining how the ministry handles dozens of independent services. The role involved a complete, ground-up reimplementation of core software that had been running for over twenty years, updating it to meet modern requirements. Built on a distributed microservices architecture using Java, Apache Kafka for event streaming, and Camunda for business process orchestration, the new system replaced rigid, legacy workflows with a highly scalable, event-driven framework designed for long-term uniformity and efficiency. I oversaw the developers of the team as the lead developer, engaging in constant communication with both technical and functional stakeholders.",
+      "As part of a large-scale IT modernization initiative for the Austrian Ministry of Finance (BMF), this project focused on unifying and streamlining how the ministry handles dozens of independent services. The role involved a complete, ground-up reimplementation of core software that had been running for over twenty years, updating it to meet modern requirements. Built on a distributed microservices architecture using Java, Apache Kafka for event streaming, and Camunda for business process orchestration, the new system replaced rigid, legacy workflows with a highly scalable, event-driven framework designed for long-term uniformity and efficiency. I oversaw the developers of the team as the lead developer, engaging in constant communication with both technical and functional stakeholders.",
     ],
     context: "work",
     org: "Accenture",
@@ -276,10 +275,9 @@ export const projects: Project[] = [
   },
   {
     id: "bmf-deadline",
-    title:
-      "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
+    title: "Central deadline management at the Austrian BMF",
     description: [
-      "This project was a core component of a major IT modernization initiative for the Austrian Ministry of Finance, focused on the complete, ground-up reimplementation of a 20+ year-old software system to meet modern operational requirements. The primary objective was building a robust, centralized deadline handling system. To achieve this, the solution was designed using a Service-Oriented Architecture (SOA) and decoupled microfrontends, utilizing Java, Apache Kafka, and Camunda to orchestrate complex workflows. By implementing the CQRS (Command Query Responsibility Segregation) pattern, the new system effectively separated read and write operations, ensuring high performance, scalability, and data consistency for deadline handling.",
+      "This project was a core component of a major IT modernization initiative for the Austrian Ministry of Finance (BMF), focused on the complete, ground-up reimplementation of a 20+ year-old software system to meet modern operational requirements. The primary objective was building a robust, centralized deadline handling system. To achieve this, the solution was designed using a Service-Oriented Architecture (SOA) and decoupled microfrontends, utilizing Java, Apache Kafka, and Camunda to orchestrate complex workflows. By implementing the CQRS (Command Query Responsibility Segregation) pattern, the new system effectively separated read and write operations, ensuring high performance, scalability, and data consistency for deadline handling.",
     ],
     context: "work",
     org: "Accenture",
@@ -316,10 +314,9 @@ export const projects: Project[] = [
   },
   {
     id: "bmf-component-library",
-    title:
-      "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
+    title: "React component library at the Austrian BMF",
     description: [
-      "Serving as Lead Developer for a key segment of a massive IT modernization initiative for the Austrian Ministry of Finance, I took ownership of a central React component library designed to unify the ministry's digital ecosystem. Stepping into a project that initially lacked proper development practices, I established rigorous engineering standards, code quality baselines, and a structured delivery pipeline. In addition to driving the technical execution, I actively participated in the high-level design decisions, collaborating with cross-functional teams to ensure the shared component architecture was scalable, accessible, and aligned with the overarching modernization goals.",
+      "Serving as Lead Developer for a key segment of a massive IT modernization initiative for the Austrian Ministry of Finance (BMF), I took ownership of a central React component library designed to unify the ministry's digital ecosystem. Stepping into a project that initially lacked proper development practices, I established rigorous engineering standards, code quality baselines, and a structured delivery pipeline. In addition to driving the technical execution, I actively participated in the high-level design decisions, collaborating with cross-functional teams to ensure the shared component architecture was scalable, accessible, and aligned with the overarching modernization goals.",
     ],
     context: "work",
     org: "Accenture",
@@ -341,8 +338,7 @@ export const projects: Project[] = [
   },
   {
     id: "bmf-camunda-prototype",
-    title:
-      "Project as part of the IT modernization at the Austrian Federal Ministry of Finance (BMF)",
+    title: "Camunda Proof-of-Concept at the Austrian BMF",
     description: [
       "As part of the large-scale IT modernization for the Austrian Ministry of Finance, this project involved developing a targeted prototype designed to demonstrate the capabilities and integration potential of Camunda for business process orchestration. The proof-of-concept seamlessly connected a robust backend ecosystem, built with Java and Apache Kafka for event-driven streaming, with a modern, responsive frontend implemented in Next.js. By delivering this functional prototype, we successfully validated the architecture's viability, paving the way for data-driven decisions on orchestrating complex workflows across the ministry's broader modernization pipeline.",
     ],
@@ -389,8 +385,7 @@ export const projects: Project[] = [
   },
   {
     id: "svs-it-modernization",
-    title:
-      "Project as part of the IT modernization at the Austrian Social Insurance Institution for the Self-Employed (SVS)",
+    title: "Project as part of the IT modernization at the Austrian SVS",
     description: [
       "Joining at the tail end of a major IT modernization for the Austrian Social Insurance Institution for the Self-Employed (SVS), I contributed to a service that originally began as a small prototype but ultimately exploded into a massive, five-year initiative spanning four development teams. Working as an intern within this large-scale environment, my efforts were focused on stabilizing the rapidly expanded system by aggressively increasing automated test coverage and debugging critical runtime issues. This role required diving deep into a complex, multi-team codebase to identify edge cases, resolve regressions, and ensure the software met production-grade reliability standards for public service delivery.",
     ],

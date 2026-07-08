@@ -15,15 +15,9 @@ Variations created via https://realfavicongenerator.net/
 - General alignment necessary
   - coding styles (possibly also extract some common logic)
   - texts and descriptions
+- i18n
+- light/dark theme toggle
 
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
   - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline
-- need to provide proper descriptions still
-
-### Skills
-- maybe need advanced rows that show where exactly the skills were actually acquired
-  - similarly, maybe the career section should include skill tags when expanding an entry
-
-### Projects
-- list of actual projects
