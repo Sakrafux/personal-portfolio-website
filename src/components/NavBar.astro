@@ -173,6 +173,7 @@ const isActive = (href: string) =>
     background: none;
     border: 0;
     cursor: pointer;
+    z-index: 10;
   }
 
   .menu-toggle-bar {
@@ -181,7 +182,9 @@ const isActive = (href: string) =>
     width: 100%;
     background-color: var(--color-text-muted);
     border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {

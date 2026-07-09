@@ -242,22 +242,29 @@ for (let y = currentYear; y >= earliestYear; y--) {
     }
 
     .timeline {
-      grid-template-columns: 1fr 24px 50px;
+      grid-template-columns: 1fr 24px 40px;
     }
 
     .timeline[data-view="edu"] {
-      grid-template-columns: 50px 24px 1fr;
+      grid-template-columns: 40px 24px 1fr;
     }
 
     .year {
       grid-column: 3;
+      justify-content: end;
     }
 
     .timeline[data-view="edu"] .year {
       grid-column: 1;
+      justify-content: start;
     }
 
     .year-boundary {
+      grid-column: 1 / -1;
+    }
+
+    .timeline[data-view="work"] .year-boundary,
+    .timeline[data-view="edu"] .year-boundary {
       grid-column: 1 / -1;
     }
 
