@@ -124,7 +124,7 @@ export const education: TimelineEntry[] = [
     title: "Master - Business Informatics",
     org: "TU Wien - Grade 1.0",
     description:
-      "Deepening of my studies with a special focus on Economic Modeling and Information System Engineering.",
+      "Deepening of my studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
@@ -149,7 +149,7 @@ export const education: TimelineEntry[] = [
     title: "Bachelor - Software & Information Engineering",
     org: "TU Wien - Grade 1.2",
     description:
-      "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, to give a broad knowledge basis.",
+      "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, to give a broad knowledge basis, and finished with distinction.",
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,

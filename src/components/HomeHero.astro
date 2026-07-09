@@ -1,5 +1,5 @@
 ---
-
+import SocialLinks from "./SocialLinks.astro";
 ---
 
 <section class="hero-section">
@@ -26,8 +26,22 @@
   </div>
 
   <div class="container">
-    <p>I build reliable software across frontend, backend, data, and deployment.</p>
-    <p>TODO more</p>
+    <p class="statement">
+      I build <span class="emphasis">reliable software</span> across frontend, backend, data, and deployment.
+    </p>
+    <p>
+      I have been developing software systems for more than 10 years and enjoy building software
+      that is not only functional, but is <span class="emphasis"
+        >reliable and feels great to use</span
+      > from End-to-End. At my core, I love <span class="emphasis">solving issues</span>, whether
+      they be customer's <span class="emphasis">business problems</span>, private hobby projects, or
+      academic challenges (resulting in graduation with distinction).
+    </p>
+    <p>
+      I am most experienced with <span class="emphasis">Java, TypeScript, and Go,</span> but also highly
+      flexible and eager to learn more.
+    </p>
+    <SocialLinks withBorder />
   </div>
 </section>
 
@@ -100,5 +114,15 @@
     color: var(--color-text-muted);
     font-size: clamp(0.95rem, 2.2vw, 1.25rem);
     font-style: italic;
+  }
+
+  .statement {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .emphasis {
+    color: var(--color-accent);
   }
 </style>
