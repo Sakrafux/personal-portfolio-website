@@ -43,7 +43,7 @@ const formatDateRange = (start: string, end: string | null) => {
 
 {
   entries.map((entry, i) => {
-    const { accentColor, lineColumn, cardColumn, cardLocation, prefix } = entry;
+    const { accentColor, cardLocation, prefix } = entry;
 
     const color =
       accentColor === "primary" ? "var(--color-accent)" : "var(--color-accent-secondary)";
@@ -70,30 +70,34 @@ const formatDateRange = (start: string, end: string | null) => {
           <div
             class={`duration ${!entry.end ? "ongoing" : ""}`}
             data-entry-id={id}
-            style={`grid-row: ${startRow + 2} / ${endRow + 1}; grid-column: ${lineColumn}; background-color: ${color}`}
+            data-type={prefix}
+            style={`grid-row: ${startRow + 2} / ${endRow + 1}; background-color: ${color}`}
           />
         )}
         <div
           class={`dot start ${entry.end ? "" : "active"}`}
           data-entry-id={id}
-          style={`grid-row: ${startRow}; grid-column: ${lineColumn}; border-color: ${color}; --chosen-accent-color: ${color}`}
+          data-type={prefix}
+          style={`grid-row: ${startRow}; border-color: ${color}; --chosen-accent-color: ${color}`}
           title={formatDate(entry.start)}
         />
         {entry.end && differentMonths && (
           <div
             class="dot"
             data-entry-id={id}
-            style={`grid-row: ${endRow}; grid-column: ${lineColumn}; border-color: ${color}; --chosen-accent-color: ${color}`}
+            data-type={prefix}
+            style={`grid-row: ${endRow}; border-color: ${color}; --chosen-accent-color: ${color}`}
             title={entry.end ? formatDate(entry.end) : "Present"}
           />
         )}
         <div
           class={`timeline-card ${cardLocation + "-card"}`}
           data-entry-id={id}
+          data-type={prefix}
           tabindex="0"
           role="button"
           aria-expanded="false"
-          style={`grid-row: ${endRow + rowAdjustment + 2}; grid-column: ${cardColumn}; --chosen-accent-color: ${color}; --chosen-accent-color-hover: ${colorHover}`}
+          style={`grid-row: ${endRow + rowAdjustment + 2}; --chosen-accent-color: ${color}; --chosen-accent-color-hover: ${colorHover}`}
         >
           <span class="date-range" style={`color: ${color}`}>
             {formatDateRange(entry.start, entry.end)}
@@ -177,6 +181,7 @@ const formatDateRange = (start: string, end: string | null) => {
 
 <style>
   .duration {
+    grid-column: var(--line-col);
     width: 2px;
     background-color: var(--color-accent);
     justify-self: center;
@@ -186,11 +191,20 @@ const formatDateRange = (start: string, end: string | null) => {
     position: relative;
   }
 
+  .duration[data-type="work"] {
+    --line-col: 2;
+  }
+
+  .duration[data-type="edu"] {
+    --line-col: 4;
+  }
+
   .duration.selected {
     width: 4px;
   }
 
   .dot {
+    grid-column: var(--line-col);
     width: 12px;
     height: 12px;
     background-color: var(--color-bg-main);
@@ -200,6 +214,14 @@ const formatDateRange = (start: string, end: string | null) => {
     margin-bottom: -6px;
     z-index: 3;
     cursor: pointer;
+  }
+
+  .dot[data-type="work"] {
+    --line-col: 2;
+  }
+
+  .dot[data-type="edu"] {
+    --line-col: 4;
   }
 
   .dot.start {
@@ -232,6 +254,7 @@ const formatDateRange = (start: string, end: string | null) => {
   }
 
   .timeline-card {
+    grid-column: var(--card-col);
     --chosen-accent-color: var(--color-accent);
     --chosen-accent-color-hover: var(--color-accent-hover);
     width: calc(100% - 1rem);
@@ -244,6 +267,14 @@ const formatDateRange = (start: string, end: string | null) => {
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease;
+  }
+
+  .timeline-card[data-type="work"] {
+    --card-col: 1;
+  }
+
+  .timeline-card[data-type="edu"] {
+    --card-col: 5;
   }
 
   .timeline-card:hover {
@@ -362,6 +393,18 @@ const formatDateRange = (start: string, end: string | null) => {
   @media (prefers-reduced-motion: reduce) {
     .dot.active {
       animation: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    :global(.timeline[data-view="work"]) [data-type="edu"],
+    :global(.timeline[data-view="edu"]) [data-type="work"] {
+      display: none;
+    }
+
+    :global(.timeline[data-view="edu"]) [data-type="edu"] {
+      --line-col: 2;
+      --card-col: 3;
     }
   }
 </style>

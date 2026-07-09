@@ -174,7 +174,7 @@ export const education: TimelineEntry[] = [
     description: null,
     icon: "/logos/sap_logo.jpg",
     accentColor: "secondary",
-    rowAdjustment: -2,
+    rowAdjustment: -3,
     important: false,
   },
   {

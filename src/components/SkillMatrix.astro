@@ -197,4 +197,18 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   .skills-table tbody tr:hover {
     background-color: var(--color-bg-surface);
   }
+
+  /* Mobile breakpoint */
+  @media (max-width: 640px) {
+    .skill-matrix {
+      padding: 0 1rem 1.5rem;
+    }
+
+    .skills-table th,
+    .skills-table td {
+      padding: 0.5rem 0.25rem;
+      border-bottom: 1px solid var(--color-border);
+      text-align: center;
+    }
+  }
 </style>

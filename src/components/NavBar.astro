@@ -31,8 +31,82 @@ const isActive = (href: string) =>
         ))
       }
     </div>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-drawer"
+    >
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+      <span class="menu-toggle-bar"></span>
+    </button>
   </nav>
+
+  <div class="drawer-backdrop" data-hidden="true"></div>
+  <aside class="drawer" id="mobile-drawer" data-hidden="true" aria-hidden="true">
+    <div class="drawer-links">
+      {
+        links.map((link) => (
+          <a
+            class="muted-link"
+            href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </aside>
 </header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+  const drawer = document.querySelector<HTMLElement>("#mobile-drawer");
+  const backdrop = document.querySelector<HTMLElement>(".drawer-backdrop");
+  const header = document.querySelector("header");
+
+  if (toggle && drawer && backdrop) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      drawer.setAttribute("aria-hidden", String(!open));
+      drawer.setAttribute("data-hidden", String(!open));
+      backdrop.setAttribute("data-hidden", String(!open));
+      if (open) {
+        document.body.style.overflow = "hidden";
+        drawer.querySelector("a")?.focus();
+      } else {
+        document.body.style.overflow = "";
+        toggle.focus();
+      }
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    backdrop.addEventListener("click", () => setOpen(false));
+    drawer.addEventListener("click", (e) => {
+      if (e.target instanceof HTMLAnchorElement) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+      }
+    });
+
+    // Close on resize past breakpoint so state stays in sync with CSS
+    const mq = window.matchMedia("(min-width: 641px)");
+    mq.addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>
 
 <style>
   header {
@@ -85,5 +159,101 @@ const isActive = (href: string) =>
 
   .links a[aria-current="page"] {
     color: var(--color-accent);
+  }
+
+  /* Hamburger button — hidden on desktop, shown at <=640px */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0 10px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .menu-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: var(--color-text-muted);
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* Drawer + backdrop */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
+
+  .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: min(80vw, 300px);
+    background-color: var(--color-bg-surface);
+    border-left: 1px solid var(--color-border);
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+    padding: calc(var(--navbar-height) + 1rem) 1.5rem 1.5rem;
+  }
+
+  .drawer-backdrop[data-hidden="true"],
+  .drawer[data-hidden="true"] {
+    pointer-events: none;
+  }
+
+  .drawer-backdrop[data-hidden="true"] {
+    opacity: 0;
+  }
+
+  .drawer[data-hidden="true"] {
+    transform: translateX(100%);
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .drawer-links a {
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .drawer-links a[aria-current="page"] {
+    color: var(--color-accent);
+  }
+
+  /* Mobile breakpoint */
+  @media (max-width: 640px) {
+    .links {
+      display: none;
+    }
+    .menu-toggle {
+      display: flex;
+    }
   }
 </style>
