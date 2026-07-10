@@ -73,7 +73,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
   </div>
 
   <div class="card-header">
-    <h3>
+    <h2>
       {project.title}
       {
         linkable && (
@@ -95,7 +95,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
           </a>
         )
       }
-    </h3>
+    </h2>
     {project.org && <span class="org">{project.org}</span>}
   </div>
 
@@ -134,28 +134,20 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     {visibleSkills.map((skill) => <li>{skill}</li>)}
     {
       hasHiddenSkills && (
-        <li
-          class="skill-toggle toggle-more"
-          tabindex="0"
-          role="button"
-          aria-expanded="false"
-          data-toggle-scope=".skill-tags"
-        >
-          +{hiddenSkills.length} more
+        <li class="skill-toggle toggle-more">
+          <span tabindex="0" role="button" aria-expanded="false" data-toggle-scope=".skill-tags">
+            +{hiddenSkills.length} more
+          </span>
         </li>
       )
     }
     {hasHiddenSkills && hiddenSkills.map((skill) => <li class="skill-hidden">{skill}</li>)}
     {
       hasHiddenSkills && (
-        <li
-          class="skill-toggle toggle-less"
-          tabindex="0"
-          role="button"
-          aria-expanded="true"
-          data-toggle-scope=".skill-tags"
-        >
-          Show less
+        <li class="skill-toggle toggle-less">
+          <span tabindex="0" role="button" aria-expanded="true" data-toggle-scope=".skill-tags">
+            Show less
+          </span>
         </li>
       )
     }
@@ -224,7 +216,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     margin-bottom: 0.75rem;
   }
 
-  .project-card h3 {
+  .project-card h2 {
     font-size: 1.1rem;
     margin-bottom: 0.15rem;
     display: flex;
@@ -240,7 +232,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     text-decoration: none;
   }
 
-  .project-card h3:hover .heading-anchor,
+  .project-card h2:hover .heading-anchor,
   .heading-anchor:focus {
     opacity: 1;
   }

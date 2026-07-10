@@ -46,7 +46,7 @@ const isActive = (href: string) =>
   </nav>
 
   <div class="drawer-backdrop" data-hidden="true"></div>
-  <aside class="drawer" id="mobile-drawer" data-hidden="true" aria-hidden="true">
+  <aside class="drawer" id="mobile-drawer" data-hidden="true">
     <div class="drawer-links">
       {
         links.map((link) => (
@@ -207,6 +207,7 @@ const isActive = (href: string) =>
   }
 
   .drawer {
+    display: none;
     position: fixed;
     top: 0;
     right: 0;
@@ -257,6 +258,9 @@ const isActive = (href: string) =>
     }
     .menu-toggle {
       display: flex;
+    }
+    #mobile-drawer {
+      display: block;
     }
   }
 </style>

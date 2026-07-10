@@ -10,7 +10,7 @@ interface Props {
 const { projects, linkable = false } = Astro.props;
 ---
 
-<div class="project-list container">
+<div class="project-list">
   {projects.map((project) => <ProjectCard project={project} linkable={linkable} />)}
 </div>
 
