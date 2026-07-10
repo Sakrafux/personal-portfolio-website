@@ -1,20 +1,23 @@
 ---
-import SocialLinks from "./SocialLinks.astro";
+import { Image } from "astro:assets";
+
+import SocialLinks from "@/components/SocialLinks.astro";
+import mountFuji from "@/assets/mount_fuji.jpg";
 ---
 
 <section class="hero-section">
   <div class="hero">
-    <picture>
-      <source srcset="/images/mount_fuji.webp" type="image/webp" />
-      <img
-        src="/images/mount_fuji.jpg"
-        alt="Mount Fuji"
-        width="2000"
-        height="612"
-        loading="eager"
-        decoding="async"
-      />
-    </picture>
+    <Image
+      src={mountFuji}
+      alt="Andreas at Mount Fuji"
+      width={2000}
+      height={612}
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      widths={[400, 800, 1200, 2000]}
+      sizes="(max-width: 600px) 400px, (max-width: 1200px) 800px, 2000px"
+    />
 
     <div class="overlay">
       <div class="copy">
