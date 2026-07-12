@@ -66,7 +66,7 @@ export const work: TimelineEntry[] = [
   {
     start: "2021-08",
     end: "2021-12",
-    title: "Full Stack Developer",
+    title: "Full-Stack Developer",
     org: "Freelance",
     description: null,
     icon: null,
@@ -124,7 +124,7 @@ export const education: TimelineEntry[] = [
     title: "Master - Business Informatics",
     org: "TU Wien - Grade 1.0",
     description:
-      "Deepening of my studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
+      "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
@@ -136,7 +136,7 @@ export const education: TimelineEntry[] = [
     title: "Research Assistant",
     org: "King's College London",
     description:
-      "Integration of textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+      "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
     icon: "/logos/kings_college_london_logo.jpg",
     accentColor: "secondary",
     rowAdjustment: 1,
@@ -149,7 +149,7 @@ export const education: TimelineEntry[] = [
     title: "Bachelor - Software & Information Engineering",
     org: "TU Wien - Grade 1.2",
     description:
-      "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, to give a broad knowledge basis, and finished with distinction.",
+      "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
