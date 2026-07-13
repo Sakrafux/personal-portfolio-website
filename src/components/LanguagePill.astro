@@ -1,0 +1,77 @@
+---
+const currentPath = Astro.url.pathname;
+const isDe = currentPath.startsWith("/de");
+const enHref = isDe ? currentPath.replace(/^\/de/, "") || "/" : currentPath;
+const deHref = isDe ? currentPath : `/de${currentPath === "/" ? "" : currentPath}`;
+---
+
+<div class="toggle-pill" role="group" aria-label="Language">
+  <a
+    class="toggle-pill-seg"
+    href={enHref}
+    data-lang-val="en"
+    aria-pressed={isDe ? "false" : "true"}
+    aria-label="English"
+    title="English"
+  >
+    EN
+  </a>
+  <a
+    class="toggle-pill-seg"
+    href={deHref}
+    data-lang-val="de"
+    aria-pressed={isDe ? "true" : "false"}
+    aria-label="Deutsch"
+    title="Deutsch"
+  >
+    DE
+  </a>
+</div>
+
+<style>
+  .toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 2px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-surface);
+  }
+
+  .toggle-pill-seg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 0.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .toggle-pill-seg:hover:not([aria-pressed="true"]) {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .toggle-pill-seg[aria-pressed="true"] {
+    background-color: var(--color-bg-main);
+    color: var(--color-accent);
+  }
+
+  .drawer .toggle-pill-seg {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 0.6rem;
+    font-size: 0.9rem;
+  }
+</style>

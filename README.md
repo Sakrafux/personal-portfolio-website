@@ -184,7 +184,7 @@ Defined as CSS custom properties on `:root` in `src/styles/index.css`, following
 | `--navbar-height` | `70px` | NavBar sticky height + hero offset calculations |
 | `--table-header-height` | `2.5rem` | Skill matrix header row |
 
-`.container` is the shared horizontal wrapper (`max-width: 1000px`, auto margins, `1.5rem` padding; reduced to `1rem` on mobile `≤640px`).
+`.container` is the shared horizontal wrapper (`max-width: 1000px`, auto margins, `1.5rem` padding; reduced to `1rem` on mobile `≤740px`).
 
 ## Icons
 

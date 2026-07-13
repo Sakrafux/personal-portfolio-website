@@ -1,4 +1,7 @@
 ---
+import ThemePill from "./ThemePill.astro";
+import LanguagePill from "./LanguagePill.astro";
+
 const links = [
   { href: "/", label: "Home" },
   { href: "/career", label: "Career" },
@@ -32,6 +35,11 @@ const isActive = (href: string) =>
       }
     </div>
 
+    <div class="tools">
+      <ThemePill />
+      <LanguagePill />
+    </div>
+
     <button
       class="menu-toggle"
       type="button"
@@ -59,6 +67,10 @@ const isActive = (href: string) =>
           </a>
         ))
       }
+    </div>
+    <div class="drawer-tools">
+      <ThemePill />
+      <LanguagePill />
     </div>
   </aside>
 </header>
@@ -136,10 +148,6 @@ const isActive = (href: string) =>
     letter-spacing: -0.01em;
   }
 
-  .brand:hover {
-    color: var(--color-text-primary);
-  }
-
   .brand img {
     display: block;
   }
@@ -161,14 +169,28 @@ const isActive = (href: string) =>
     color: var(--color-accent);
   }
 
-  /* Hamburger button — hidden on desktop, shown at <=640px */
+  .tools {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .tools a,
+  .tools span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    padding: 0.25rem 0;
+    cursor: pointer;
+  }
+
+  /* Hamburger button — hidden on desktop, shown at <=740px */
   .menu-toggle {
     display: none;
     flex-direction: column;
     justify-content: center;
     gap: 5px;
     width: 44px;
-    height: 44px;
     padding: 0 10px;
     background: none;
     border: 0;
@@ -233,6 +255,23 @@ const isActive = (href: string) =>
     transform: translateX(100%);
   }
 
+  .drawer-tools {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .drawer-tools a {
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+    padding: 0.25rem 0;
+    cursor: pointer;
+  }
+
   .drawer-links {
     display: flex;
     flex-direction: column;
@@ -252,8 +291,9 @@ const isActive = (href: string) =>
   }
 
   /* Mobile breakpoint */
-  @media (max-width: 640px) {
-    .links {
+  @media (max-width: 740px) {
+    .links,
+    .tools {
       display: none;
     }
     .menu-toggle {

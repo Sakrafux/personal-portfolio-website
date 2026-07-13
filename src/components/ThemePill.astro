@@ -1,0 +1,112 @@
+---
+
+---
+
+<div class="toggle-pill" role="group" aria-label="Color theme">
+  <button
+    type="button"
+    class="toggle-pill-seg"
+    data-theme-val="dark"
+    aria-pressed="true"
+    aria-label="Dark theme"
+    title="Dark theme"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path>
+    </svg>
+  </button>
+  <button
+    type="button"
+    class="toggle-pill-seg"
+    data-theme-val="light"
+    aria-pressed="false"
+    aria-label="Light theme"
+    title="Light theme"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path
+        d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+      ></path>
+    </svg>
+  </button>
+</div>
+
+<style>
+  .toggle-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    padding: 2px;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-bg-surface);
+  }
+
+  .toggle-pill-seg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+
+  .toggle-pill-seg svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .toggle-pill-seg:hover:not([aria-pressed="true"]) {
+    color: var(--color-text-primary);
+  }
+
+  .toggle-pill-seg[aria-pressed="true"] {
+    background-color: var(--color-bg-main);
+    color: var(--color-accent);
+  }
+
+  /* Slightly larger touch targets inside the mobile drawer */
+  .drawer .toggle-pill-seg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .drawer .toggle-pill-seg svg {
+    width: 20px;
+    height: 20px;
+  }
+</style>
+
+<script>
+  const initPills = () => {
+    document.querySelectorAll<HTMLElement>(".toggle-pill").forEach((pill) => {
+      if (pill.dataset.bound === "true") return;
+      pill.dataset.bound = "true";
+
+      const segments = pill.querySelectorAll<HTMLButtonElement>(".toggle-pill-seg");
+
+      pill.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        const seg = target.closest(".toggle-pill-seg");
+        if (!(seg instanceof HTMLButtonElement)) return;
+
+        segments.forEach((s) => s.setAttribute("aria-pressed", s === seg ? "true" : "false"));
+      });
+    });
+  };
+
+  initPills();
+  document.addEventListener("astro:after-swap", initPills);
+</script>
