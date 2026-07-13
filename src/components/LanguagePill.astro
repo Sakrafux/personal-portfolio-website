@@ -9,6 +9,7 @@ const deHref = isDe ? currentPath : `/de${currentPath === "/" ? "" : currentPath
   <a
     class="toggle-pill-seg"
     href={enHref}
+    hreflang="en"
     data-lang-val="en"
     aria-pressed={isDe ? "false" : "true"}
     aria-label="English"
@@ -19,6 +20,7 @@ const deHref = isDe ? currentPath : `/de${currentPath === "/" ? "" : currentPath
   <a
     class="toggle-pill-seg"
     href={deHref}
+    hreflang="de"
     data-lang-val="de"
     aria-pressed={isDe ? "true" : "false"}
     aria-label="Deutsch"
