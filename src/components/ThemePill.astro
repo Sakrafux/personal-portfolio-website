@@ -90,23 +90,65 @@
 </style>
 
 <script>
-  const initPills = () => {
-    document.querySelectorAll<HTMLElement>(".toggle-pill").forEach((pill) => {
-      if (pill.dataset.bound === "true") return;
-      pill.dataset.bound = "true";
+  const applyTheme = (theme: "light" | "dark") => {
+    const apply = () => {
+      if (theme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+      }
+      try {
+        localStorage.setItem("theme", theme);
+      } catch {}
+    };
 
-      const segments = pill.querySelectorAll<HTMLButtonElement>(".toggle-pill-seg");
-
-      pill.addEventListener("click", (e) => {
-        const target = e.target as HTMLElement;
-        const seg = target.closest(".toggle-pill-seg");
-        if (!(seg instanceof HTMLButtonElement)) return;
-
-        segments.forEach((s) => s.setAttribute("aria-pressed", s === seg ? "true" : "false"));
-      });
-    });
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => void;
+    };
+    if (typeof doc.startViewTransition === "function") {
+      doc.startViewTransition(apply);
+    } else {
+      apply();
+    }
   };
 
-  initPills();
-  document.addEventListener("astro:after-swap", initPills);
+  const syncPills = () => {
+    const current =
+      document.documentElement.getAttribute("data-theme") === "light"
+        ? "light"
+        : "dark";
+    document
+      .querySelectorAll<HTMLElement>(".toggle-pill[aria-label='Color theme']")
+      .forEach((pill) => {
+        if (pill.dataset.bound === "true") return;
+        pill.dataset.bound = "true";
+
+        const segments =
+          pill.querySelectorAll<HTMLButtonElement>(".toggle-pill-seg");
+
+        // Reflect current theme into the pill segments
+        segments.forEach((s) =>
+          s.setAttribute(
+            "aria-pressed",
+            s.dataset.themeVal === current ? "true" : "false",
+          ),
+        );
+
+        pill.addEventListener("click", (e) => {
+          const target = e.target as HTMLElement;
+          const seg = target.closest(".toggle-pill-seg");
+          if (!(seg instanceof HTMLButtonElement)) return;
+          const val = seg.dataset.themeVal as "light" | "dark" | undefined;
+          if (!val) return;
+
+          applyTheme(val);
+          segments.forEach((s) =>
+            s.setAttribute("aria-pressed", s === seg ? "true" : "false"),
+          );
+        });
+      });
+  };
+
+  syncPills();
+  document.addEventListener("astro:after-swap", syncPills);
 </script>

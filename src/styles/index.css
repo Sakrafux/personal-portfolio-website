@@ -2,6 +2,8 @@
    1. DESIGN SYSTEM VARIABLES (60-30-10 Rule)
    ========================================================================== */
 :root {
+    color-scheme: dark;
+
     /* 60% Dominant: Dark Canvas Neutrals */
     --color-bg-main: #1e222a;       /* Deep Slate background */
     --color-bg-surface: #252a34;    /* Slightly lighter for cards/sections */
@@ -24,6 +26,28 @@
     /* Layout Metrics */
     --navbar-height: 70px;
     --table-header-height: 2.5rem;
+}
+
+/* Light theme overrides — applied via <html data-theme="light">.
+   The inline pre-paint script in BaseLayout.astro sets this attribute
+   before first paint to prevent FOUC. */
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    /* 60% Dominant: Light Canvas Neutrals */
+    --color-bg-main: #f4f6f9;       /* Soft, cool-tinted light gray */
+    --color-bg-surface: #ffffff;    /* Pure white for cards and elevated surfaces */
+
+    /* 30% Secondary: Typography & Structural Lines */
+    --color-text-primary: #1e222a;  /* Deep Slate (repurposed from the dark bg) */
+    --color-text-muted: #5c667a;    /* Cool slate-gray with high legibility */
+    --color-border: #e2e8f0;        /* Subtle, clean divider lines */
+
+    /* 10% Accent: Call-to-Actions & Highlights (Darkened for contrast) */
+    --color-accent: #008f6b;                    /* Deepened Mint/Teal for legibility */
+    --color-accent-hover: #007356;              /* Darker interactive state */
+    --color-accent-secondary: #d97706;          /* Rich Amber/Ochre */
+    --color-accent-secondary-hover: #b45309;    /* Darker interactive state */
 }
 
 /* ==========================================================================

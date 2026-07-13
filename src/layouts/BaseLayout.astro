@@ -14,6 +14,21 @@ const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem("theme");
+          const prefersLight = window.matchMedia(
+            "(prefers-color-scheme: light)",
+          ).matches;
+          const theme = stored ?? (prefersLight ? "light" : "dark");
+          if (theme === "light") {
+            document.documentElement.setAttribute("data-theme", "light");
+          }
+        } catch {}
+      })();
+    </script>
+
     <title>Andreas Hell | Full-Stack Developer</title>
     <meta
       name="description"
