@@ -1,12 +1,15 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import "@/styles/index.css";
 import NavBar from "@/components/NavBar.astro";
 import Footer from "@/components/Footer.astro";
+import { getLanguageFromPath } from "@/util/language.ts";
 
-import { ClientRouter } from "astro:transitions";
+const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
 ---
 
-<html>
+<html lang={isDe ? "de" : "en"}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,6 +39,10 @@ import { ClientRouter } from "astro:transitions";
     <meta property="og:image" content="https://andreas-hell.ddns.net/favicon/favicon-96x96.png" />
 
     <meta name="generator" content={Astro.generator} />
+
+    <link rel="alternate" hreflang="de" href={"https://andreas-hell.ddns.net" + deHref} />
+    <link rel="alternate" hreflang="en" href={"https://andreas-hell.ddns.net" + enHref} />
+    <link rel="alternate" hreflang="x-default" href={"https://andreas-hell.ddns.net" + enHref} />
 
     <ClientRouter />
   </head>

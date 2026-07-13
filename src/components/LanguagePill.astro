@@ -1,8 +1,7 @@
 ---
-const currentPath = Astro.url.pathname;
-const isDe = currentPath.startsWith("/de");
-const enHref = isDe ? currentPath.replace(/^\/de/, "") || "/" : currentPath;
-const deHref = isDe ? currentPath : `/de${currentPath === "/" ? "" : currentPath}`;
+import { getLanguageFromPath } from "@/util/language.ts";
+
+const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
 ---
 
 <div class="toggle-pill" role="group" aria-label="Language">
