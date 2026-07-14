@@ -1,7 +1,7 @@
 # Andreas Hell | Full-Stack Developer
 
 Source for the personal portfolio at https://andreas-hell.ddns.net/.
-Static site built with [Astro](https://astro.build/) (static output, view transitions via `ClientRouter`).
+Static site built with [Astro](https://astro.build/) (static output, view transitions via `ClientRouter`), with **i18n** (`en` default + `de` prefixed) and a **dark/light theme** toggle persisted to `localStorage`.
 All content lives in `src/data/` and `public/`; the Astro components only render it.
 
 ## Tech Stack
@@ -36,17 +36,24 @@ tsconfig.json             Strict TS, @/* path alias
 package.json              Scripts: dev / build / preview / astro (no lint/typecheck script yet)
 
 src/
-├── pages/                File-based routing (one page per route)
+├── pages/                File-based routing (one page per route; de/ mirrors routes for /de/*)
 │   ├── index.astro       /          Home (assembled from Home* sections)
 │   ├── career.astro       /career     Full career timeline
 │   ├── projects.astro    /projects   Full projects list
-│   └── skills.astro       /skills     Full skill matrix
+│   ├── skills.astro       /skills     Full skill matrix
+│   └── de/                German locale (Astro i18n: default locale "en" unprefixed, "de" prefixed)
+│       ├── index.astro   /de
+│       ├── career.astro   /de/career
+│       ├── projects.astro /de/projects
+│       └── skills.astro   /de/skills
 ├── layouts/
-│   └── BaseLayout.astro   HTML shell: <head>, meta/OG, NavBar, <slot/>, Footer, ClientRouter
+│   └── BaseLayout.astro   HTML shell: <head>, meta/OG + hreflang alternates, theme pre-paint script, NavBar, <slot/>, Footer, ClientRouter
 ├── components/            Presentation components (no page logic here)
 │   ├── NavBar.astro       Sticky header + mobile drawer
 │   ├── Footer.astro       Social links + copyright year
 │   ├── SocialLinks.astro  GitHub / LinkedIn / Email / CV download (reused in Hero & Footer)
+│   ├── LanguagePill.astro EN/DE segmented toggle (links via getLocalizedPath)
+│   ├── ThemePill.astro    Dark/Light segmented toggle (sets <html data-theme>, localStorage, View Transitions)
 │   ├── HomeHero.astro     Hero image + headline + statement + inline social links
 │   ├── HomeCareer.astro   Home section: important timeline entries only
 │   ├── HomeProjects.astro Home section: top 5 important projects
@@ -56,12 +63,17 @@ src/
 │   ├── ProjectList.astro  Maps Project[] → ProjectCard[]
 │   ├── ProjectCard.astro   Single project card (expandable description + skill tags)
 │   └── SkillMatrix.astro   Skill table grouped by category, with legend
-├── data/                  Single source of truth for all content
+├── data/                  Single source of truth for all content (localized via LocalizedText/LocalizedList)
 │   ├── projects.ts        Project[] + sortProjects() helper
 │   ├── career-timeline.ts work[] + education[] timeline entries
 │   └── skills.ts          SkillGroup[] + sortSkillGroups() / filterSkillScore() helpers
+├── i18n/
+│   ├── ui.ts              Locale type, DEFAULT_LOCALE, LocalizedText/LocalizedList types, pick() + t()/tTemplate(), EN/DE dictionary
+│   └── routing.ts         PREFIXED_LOCALES, getLocaleFromPath / stripLocalePrefix / getLocalizedPath
+├── util/
+│   └── format.ts          formatDate / formatDateRange (locale-aware month names; AT spelling "Jän"…)
 ├── styles/
-│   └── index.css          Design tokens + reset + base typography + layout
+│   └── index.css          Design tokens (dark on :root, light overrides on :root[data-theme="light"]) + reset + typography + layout
 └── assets/
     └── mount_fuji.jpg      Processed by Astro:assets (used by HomeHero via <Image>)
 
@@ -81,6 +93,8 @@ public/                    Served verbatim at site root
 | `/projects` | `pages/projects.astro` | Full project list, each card linkable via `#<id>` anchor | `projects.ts` → `projects` (sorted by `sortProjects`) |
 | `/skills` | `pages/skills.astro` | Full skill matrix table (all groups, all contexts) | `skills.ts` → `skillGroups` (sorted by `sortSkillGroups`) |
 
+Each of the four routes is **mirrored under `/de/*`** (e.g. `/de/career` → `pages/de/career.astro`); the German pages render the same components with `Astro.currentLocale === "de"`, so all labels come from the `de` dictionary and `LocalizedText`/`LocalizedList` content fields switch automatically.
+
 ### Home page vs. dedicated pages
 The home page intentionally shows **curated subsets** of the same data:
 
@@ -98,10 +112,10 @@ All editable content is in `src/data/`. Types are exported alongside the data.
 ```ts
 interface Project {
   id: string;            // used as #anchor on /projects
-  title: string;         // Title Case convention
-  description: string[]; // paragraphs; first shown, rest collapsed behind "Read more"
+  title: LocalizedText;  // { en, de }; Title Case convention
+  description: LocalizedList; // records of paragraphs; first shown, rest collapsed behind "Read more"
   context: "work" | "education" | "private";
-  org?: string;
+  org?: LocalizedText;   // { en, de }
   start: "YYYY-MM";      // end-exclusive in display (formatted via formatDateRange)
   end: "YYYY-MM" | null; // null = "Present"
   skills: string[];      // free-form tags; first 5 shown, rest collapsed
@@ -109,6 +123,8 @@ interface Project {
   important: boolean;    // gates home-page inclusion
 }
 ```
+
+Localized fields are resolved at render time with `pick(locale, field)` (or implicitly inside components that already call `t`/`pick`) — `en` is the default locale, `de` is the prefixed one.
 `sortProjects()` sorts by `end` (null treated as `9999-12`), newest first.
 
 **Voice convention:** first person for academic/private projects ("I built/designed…"); first person only for personal responsibilities on work projects, "our team / we" for team-level work ("I oversaw…", "our team performed…").
@@ -118,9 +134,9 @@ interface Project {
 interface TimelineEntry {
   start: "YYYY-MM";
   end: "YYYY-MM" | null;  // null = ongoing
-  title: string;           // role / degree / certification (official names kept verbatim)
-  org: string;             // may include grade, e.g. "TU Wien - Grade 1.0"
-  description: string | null;  // first person ("I…"), or null for terse entries
+  title: LocalizedText;   // role / degree / certification (official names kept verbatim)
+  org: LocalizedText;     // may include grade, e.g. "TU Wien - Grade 1.0"
+  description: LocalizedText | null;  // first person ("I…" / "Ich…"), or null for terse entries
   icon: string | null;     // path under /logos/, e.g. "/logos/tuwien_logo.jpg"
   accentColor: "primary" | "secondary";
   rowAdjustment?: number;  // manual grid tweak (used on home page)
@@ -128,6 +144,8 @@ interface TimelineEntry {
   projectRefs?: string[];  // Project ids shown in this entry
 }
 ```
+
+A `TimelineEntryExtended` adds grid-layout fields (`lineColumn`, `cardColumn`, `cardLocation: "left" | "right"`, `prefix`) produced in the pages when assembling `work` + `education` for the `Timeline` component.
 Exported as two arrays: `work[]` and `education[]` (the latter also includes certifications as additional entries).
 
 ### `skills.ts`
@@ -135,40 +153,59 @@ Exported as two arrays: `work[]` and `education[]` (the latter also includes cer
 type SkillLevel = "familiar" | "regular" | "heavy";
 type SkillContext = "work" | "education" | "private";
 interface Skill { name: string; contexts: Partial<Record<SkillContext, SkillLevel>> }
-interface SkillGroup { title: string; skills: Skill[]; important: boolean }
+interface SkillGroup { title: LocalizedText; skills: Skill[]; important: boolean }
 ```
+
+Level labels are also localized: `skillLevels: { level: SkillLevel; label: LocalizedText }[]`.
 Helpers:
 - `sortSkillGroups()` — sorts skills within each group by weighted score (level weight × context weight), tiebreak alphabetic.
 - `filterSkillScore()` — drops skills below the importance baseline (score 25), then drops empty groups.
 
 Score weights: `familiar=1`, `regular=5`, `heavy=9`; `work=10`, `education=5`, `private=3`.
 
+## Internationalization & Theming
+
+### i18n (`src/i18n/`)
+- **Locales:** `en` (default, unprefixed) and `de` (prefixed, routes mirrored under `src/pages/de/`). Configured in `astro.config.mjs` via `i18n: { defaultLocale: "en", locales: ["en", "de"], routing: { prefixDefaultLocale: false } }`.
+- **`ui.ts`** — `Locale`/`DEFAULT_LOCALE` types, `LocalizedText` (`Record<Locale, string>`) and `LocalizedList` (`Record<Locale, string[]>`) field shapes, the `dict` of UI strings (`t(locale, key)` falls back to `DEFAULT_LOCALE` then the key), and `pick(locale, value)` to unwrap a single `LocalizedText`/`LocalizedList` field.
+- **`routing.ts`** — locale-aware path helpers: `getLocaleFromPath`, `stripLocalePrefix`, `getLocalizedPath(path, target)`. Used by `LanguagePill` and `BaseLayout`.
+- **Content fields** in `src/data/*` are typed as `LocalizedText` / `LocalizedList`; pages read `Astro.currentLocale` (typed as `Locale`) and resolve fields with `pick`. Months/dates are localized in `src/util/format.ts` (`MONTHS["de"]` uses Austrian "Jän").
+- **`<head>` alternates:** `BaseLayout.astro` emits `<link rel="alternate" hreflang="de|en|x-default">` and sets `<html lang={locale}>`.
+
+### Theme toggle (`src/components/ThemePill.astro`)
+- Segmented **Dark / Light** pill. Selecting light sets `data-theme="light"` on `<html>`; dark removes it so `:root` defaults reapply.
+- Choice is persisted in `localStorage` ("theme") and re-applied on every load by the pre-paint inline script in `BaseLayout.astro`. The pre-paint script also honours `prefers-color-scheme: light` when no stored value exists.
+- Updates animate through the View Transitions API (`document.startViewTransition`) when available, and re-bind on `astro:after-swap`.
+
+### Language toggle (`src/components/LanguagePill.astro`)
+- Segmented **EN / DE** pill built from anchor links to `getLocalizedPath(currentPath, "en"|"de")`, with correct `hreflang`. Pure navigation (no client JS).
+
 ## Design System
 
-Defined as CSS custom properties on `:root` in `src/styles/index.css`, following the 60-30-10 rule.
+Defined as CSS custom properties in `src/styles/index.css`, following the 60-30-10 rule. The **dark** palette lives on `:root` (default); the **light** palette overrides it via `:root[data-theme="light"]`. An inline pre-paint script in `BaseLayout.astro` sets `<html data-theme="light">` from `localStorage` / `prefers-color-scheme` before first paint to avoid FOUC.
 
 ### Color Palette
 
-**60% — Dominant dark canvas neutrals**
-| Token | Hex | Usage |
-|---|---|---|
-| `--color-bg-main` | `#1E222A` | Deep Slate — page background |
-| `--color-bg-surface` | `#252a34` | Slightly lighter — cards, drawer, skill chips |
+**60% — Dominant canvas neutrals** (dark / light)
+| Token | Dark | Light | Usage |
+|---|---|---|---|
+| `--color-bg-main` | `#1E222A` | `#F4F6F9` | Page background |
+| `--color-bg-surface` | `#252a34` | `#FFFFFF` | Cards, drawer, skill chips |
 
 **30% — Typography & structural lines**
-| Token | Hex | Usage |
-|---|---|---|
-| `--color-text-primary` | `#E5E9F0` | Crisp chalk white — headings |
-| `--color-text-muted` | `#959EAD` | Muted gray — body prose, meta, muted links |
-| `--color-border` | `#333a47` | Subtle dividers, card borders, hr |
+| Token | Dark | Light | Usage |
+|---|---|---|---|
+| `--color-text-primary` | `#E5E9F0` | `#1E222A` | Headings |
+| `--color-text-muted` | `#959EAD` | `#5C667A` | Body prose, meta, muted links |
+| `--color-border` | `#333a47` | `#E2E8F0` | Subtle dividers, card borders, hr |
 
 **10% — Focal accents**
-| Token | Hex | Usage |
-|---|---|---|
-| `--color-accent` | `#00FFC2` | Vibrant Carbon Mint — CTAs, links, active nav, highlights |
-| `--color-accent-hover` | `#00D4A2` | Darker mint — `:hover` on accent elements |
-| `--color-accent-secondary` | `#FFB347` | Amber — alternate accent (e.g. `education` context badge) |
-| `--color-accent-secondary-hover` | `#D4953B` | Darker amber — `:hover` |
+| Token | Dark | Light | Usage |
+|---|---|---|---|
+| `--color-accent` | `#00FFC2` | `#008F6B` | CTAs, links, active nav, highlights |
+| `--color-accent-hover` | `#00D4A2` | `#007356` | `:hover` on accent elements |
+| `--color-accent-secondary` | `#FFB347` | `#D97706` | Amber — alternate accent (e.g. `education` context badge) |
+| `--color-accent-secondary-hover` | `#D4953B` | `#B45309` | Darker amber — `:hover` |
 
 ### Typography
 
