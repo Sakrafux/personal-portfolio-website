@@ -291,10 +291,14 @@ for (let y = currentYear; y >= earliestYear; y--) {
 </style>
 
 <script>
-  const timeline = document.querySelector<HTMLElement>(".timeline")!;
-  const toggle = document.querySelector<HTMLElement>(".timeline-toggle");
+  const initTimelineToggle = () => {
+    const timeline = document.querySelector<HTMLElement>(".timeline");
+    const toggle = document.querySelector<HTMLElement>(".timeline-toggle");
 
-  if (timeline && toggle) {
+    if (!timeline || !toggle) return;
+    if (toggle.dataset.bound === "true") return;
+    toggle.dataset.bound = "true";
+
     const buttons = Array.from(toggle.querySelectorAll<HTMLButtonElement>(".toggle-btn"));
 
     function setActiveButton(view: string) {
@@ -313,5 +317,8 @@ for (let y = currentYear; y >= earliestYear; y--) {
     }
 
     buttons.forEach((b) => b.addEventListener("click", () => setView(b.dataset.view ?? "work")));
-  }
+  };
+
+  initTimelineToggle();
+  document.addEventListener("astro:page-load", initTimelineToggle);
 </script>

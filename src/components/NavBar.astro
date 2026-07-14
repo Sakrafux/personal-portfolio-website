@@ -89,12 +89,15 @@ const isActive = (href: string) => currentPath === href;
 </header>
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
-  const drawer = document.querySelector<HTMLElement>("#mobile-drawer");
-  const backdrop = document.querySelector<HTMLElement>(".drawer-backdrop");
-  const header = document.querySelector("header");
+  const initDrawer = () => {
+    const toggle = document.querySelector<HTMLButtonElement>(".menu-toggle");
+    const drawer = document.querySelector<HTMLElement>("#mobile-drawer");
+    const backdrop = document.querySelector<HTMLElement>(".drawer-backdrop");
 
-  if (toggle && drawer && backdrop) {
+    if (!toggle || !drawer || !backdrop) return;
+    if (toggle.dataset.bound === "true") return;
+    toggle.dataset.bound = "true";
+
     const setOpen = (open: boolean) => {
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
@@ -119,18 +122,34 @@ const isActive = (href: string) => currentPath === href;
       if (e.target instanceof HTMLAnchorElement) setOpen(false);
     });
 
-    document.addEventListener("keydown", (e) => {
+    const onKeydown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         setOpen(false);
       }
-    });
+    };
+    document.addEventListener("keydown", onKeydown);
 
     // Close on resize past breakpoint so state stays in sync with CSS
     const mq = window.matchMedia("(min-width: 641px)");
-    mq.addEventListener("change", (e) => {
+    const onBreakpoint = (e: MediaQueryListEvent) => {
       if (e.matches) setOpen(false);
-    });
-  }
+    };
+    mq.addEventListener("change", onBreakpoint);
+
+    // On the next swap, close the drawer and drop the document-level
+    // listeners so they don't pile up across navigations. Element-scoped
+    // listeners (toggle/backdrop/drawer) die with the replaced DOM.
+    const onBeforeSwap = () => {
+      setOpen(false);
+      document.removeEventListener("keydown", onKeydown);
+      mq.removeEventListener("change", onBreakpoint);
+      document.removeEventListener("astro:before-swap", onBeforeSwap);
+    };
+    document.addEventListener("astro:before-swap", onBeforeSwap);
+  };
+
+  initDrawer();
+  document.addEventListener("astro:page-load", initDrawer);
 </script>
 
 <style>
@@ -204,6 +223,7 @@ const isActive = (href: string) => currentPath === href;
     justify-content: center;
     gap: 5px;
     width: 44px;
+    height: 30px;
     padding: 0 10px;
     background: none;
     border: 0;
