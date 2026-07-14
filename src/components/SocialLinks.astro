@@ -1,9 +1,14 @@
 ---
+import { getLocaleFromPath } from "@/i18n/routing.ts";
 interface Props {
   withBorder?: boolean;
 }
 
 const { withBorder = false } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const activeLocale = getLocaleFromPath(currentPath);
+const isDe = activeLocale === "de";
 
 const links = [
   {
@@ -22,7 +27,7 @@ const links = [
     icon: "email",
   },
   {
-    href: "/documents/CV_english.pdf",
+    href: isDe ? "/documents/CV_deutsch.pdf" : "/documents/CV_english.pdf",
     label: "Download CV",
     icon: "cv",
   },
@@ -126,7 +131,7 @@ const links = [
   }
 
   /* Mobile breakpoint */
-  @media (max-width: 740px) {
+  @media (max-width: 780px) {
     .links {
       flex-direction: column;
     }

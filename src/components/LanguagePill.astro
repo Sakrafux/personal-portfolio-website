@@ -1,7 +1,11 @@
 ---
-import { getLanguageFromPath } from "@/util/language.ts";
+import { getLocaleFromPath, getLocalizedPath } from "@/i18n/routing";
 
-const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
+const currentPath = Astro.url.pathname;
+const activeLocale = getLocaleFromPath(currentPath);
+const enHref = getLocalizedPath(currentPath, "en");
+const deHref = getLocalizedPath(currentPath, "de");
+const isDe = activeLocale === "de";
 ---
 
 <div class="toggle-pill" role="group" aria-label="Language">

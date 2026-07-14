@@ -184,11 +184,11 @@ Defined as CSS custom properties on `:root` in `src/styles/index.css`, following
 | `--navbar-height` | `70px` | NavBar sticky height + hero offset calculations |
 | `--table-header-height` | `2.5rem` | Skill matrix header row |
 
-`.container` is the shared horizontal wrapper (`max-width: 1000px`, auto margins, `1.5rem` padding; reduced to `1rem` on mobile `≤740px`).
+`.container` is the shared horizontal wrapper (`max-width: 1000px`, auto margins, `1.5rem` padding; reduced to `1rem` on mobile `≤780px`).
 
 ## Icons
 
-Site favicons live in `public/favicon/` and are generated via https://realfavicongenerator.net/.
+Site favicons live in `public/favicon/`.
 They are wired in `src/layouts/BaseLayout.astro`:
 
 | File | Purpose |
@@ -196,16 +196,14 @@ They are wired in `src/layouts/BaseLayout.astro`:
 | `favicon.svg` | Primary SVG icon (used by NavBar brand) |
 | `favicon.ico` | Legacy shortcut icon |
 | `favicon-96x96.png` | 96×96 PNG icon; also used as `og:image` |
-| `apple-touch-icon.png` | 180×180 iOS home-screen icon |
-| `web-app-manifest-192x192.png` / `…-512x512.png` | PWA manifest icons |
-| `site.webmanifest` | Web app manifest (theme color, icons) |
 
 Org/school logos used by the career timeline live in `public/logos/` and are referenced by `icon` paths in `src/data/career-timeline.ts` (e.g. `"/logos/dynatrace_logo.jpg"`).
 
 ## TODOs
 
-- i18n
-- light/dark theme toggle
+- Check and translate all texts
+- Deploy website
+- Install Umami or something for simple web analytics
 
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline

@@ -1,41 +1,35 @@
 ---
 import ThemePill from "./ThemePill.astro";
 import LanguagePill from "./LanguagePill.astro";
+import { t, type Locale } from "@/i18n/ui";
+import { getLocalizedPath } from "@/i18n/routing.ts";
 
+const locale = (Astro.currentLocale ?? "en") as Locale;
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/career", label: "Career" },
-  { href: "/projects", label: "Projects" },
-  { href: "/skills", label: "Skills" },
+  { href: getLocalizedPath("/", locale), label: t(locale, "nav.home") },
+  { href: getLocalizedPath("/career", locale), label: t(locale, "nav.career") },
+  { href: getLocalizedPath("/projects", locale), label: t(locale, "nav.projects") },
+  { href: getLocalizedPath("/skills", locale), label: t(locale, "nav.skills") },
 ];
 
 const currentPath = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+const isActive = (href: string) => currentPath === href;
 ---
 
 <header>
   <nav class="container">
     <span class="brand">
-      <svg
-        viewBox="0 0 512 512"
-        role="img"
-        aria-label="Andreas Hell"
-        width="36"
-        height="36"
-      >
+      <svg viewBox="0 0 512 512" role="img" aria-label="Andreas Hell" width="36" height="36">
         <path
           fill="var(--color-accent)"
-          d="M70 442V70H142.853V110.699H105.066V401.447H142.853V442H70Z"
-        />
+          d="M70 442V70H142.853V110.699H105.066V401.447H142.853V442H70Z"></path>
         <path
           fill="var(--color-accent)"
-          d="M442 70V442H369.147V401.447H406.934V110.699H369.147V70H442Z"
-        />
+          d="M442 70V442H369.147V401.447H406.934V110.699H369.147V70H442Z"></path>
         <path
           fill="var(--color-text-primary)"
           d="M170.79 372V140H208.066V238.215H303.415V140H340.79V372H303.415V273.445H208.066V372H170.79Z"
-        />
+        ></path>
       </svg>
       <span>Andreas Hell</span>
     </span>
@@ -203,7 +197,7 @@ const isActive = (href: string) =>
     cursor: pointer;
   }
 
-  /* Hamburger button — hidden on desktop, shown at <=740px */
+  /* Hamburger button — hidden on desktop, shown at <=780px */
   .menu-toggle {
     display: none;
     flex-direction: column;
@@ -310,7 +304,7 @@ const isActive = (href: string) =>
   }
 
   /* Mobile breakpoint */
-  @media (max-width: 740px) {
+  @media (max-width: 780px) {
     .links,
     .tools {
       display: none;

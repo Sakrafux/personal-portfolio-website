@@ -1,9 +1,11 @@
+import type { LocalizedText } from "@/i18n/ui";
+
 export interface TimelineEntry {
   start: string;
   end: string | null;
-  title: string;
-  org: string;
-  description: string | null;
+  title: LocalizedText;
+  org: LocalizedText;
+  description: LocalizedText | null;
   icon: string | null;
   accentColor: "primary" | "secondary";
   rowAdjustment?: number;
@@ -22,8 +24,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2026-04",
     end: null,
-    title: "Software Engineer II",
-    org: "Dynatrace",
+    title: { en: "Software Engineer II", de: "Software Engineer II" },
+    org: { en: "Dynatrace", de: "Dynatrace" },
     description: null,
     icon: "/logos/dynatrace_logo.jpg",
     accentColor: "primary",
@@ -33,8 +35,11 @@ export const work: TimelineEntry[] = [
   {
     start: "2023-12",
     end: "2026-03",
-    title: "Application Development Senior Analyst",
-    org: "Accenture",
+    title: {
+      en: "Application Development Senior Analyst",
+      de: "Application Development Senior Analyst",
+    },
+    org: { en: "Accenture", de: "Accenture" },
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
     accentColor: "secondary",
@@ -44,8 +49,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2022-12",
     end: "2023-11",
-    title: "Application Development Analyst",
-    org: "Accenture",
+    title: { en: "Application Development Analyst", de: "Application Development Analyst" },
+    org: { en: "Accenture", de: "Accenture" },
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
     accentColor: "secondary",
@@ -55,8 +60,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2022-01",
     end: "2022-11",
-    title: "Application Development Associate",
-    org: "Accenture",
+    title: { en: "Application Development Associate", de: "Application Development Associate" },
+    org: { en: "Accenture", de: "Accenture" },
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
     accentColor: "secondary",
@@ -66,8 +71,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2021-08",
     end: "2021-12",
-    title: "Full-Stack Developer",
-    org: "Freelance",
+    title: { en: "Full-Stack Developer", de: "Full-Stack Developer" },
+    org: { en: "Freelance", de: "Freelance" },
     description: null,
     icon: null,
     accentColor: "primary",
@@ -77,8 +82,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2021-02",
     end: "2021-07",
-    title: "Consulting Intern",
-    org: "Accenture",
+    title: { en: "Consulting Intern", de: "Consulting Intern" },
+    org: { en: "Accenture", de: "Accenture" },
     description: null,
     icon: "/logos/accenture_dach_logo.jpg",
     accentColor: "secondary",
@@ -88,8 +93,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2020-07",
     end: "2020-12",
-    title: "Military Service",
-    org: "Austrian Armed Forces",
+    title: { en: "Military Service", de: "Military Service" },
+    org: { en: "Austrian Armed Forces", de: "Austrian Armed Forces" },
     description: null,
     icon: "/logos/bundesheer_logo.jpg",
     accentColor: "primary",
@@ -98,8 +103,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2019-08",
     end: "2019-08",
-    title: "Summer Intern",
-    org: "Wien IT",
+    title: { en: "Summer Intern", de: "Summer Intern" },
+    org: { en: "Wien IT", de: "Wien IT" },
     description: null,
     icon: "/logos/wienit_logo.jpg",
     accentColor: "primary",
@@ -108,8 +113,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2017-08",
     end: "2017-08",
-    title: "Summer Intern",
-    org: "SNAP Consulting",
+    title: { en: "Summer Intern", de: "Summer Intern" },
+    org: { en: "SNAP Consulting", de: "SNAP Consulting" },
     description: null,
     icon: "/logos/snap_consulting_logo.jpg",
     accentColor: "primary",
@@ -121,10 +126,12 @@ export const education: TimelineEntry[] = [
   {
     start: "2024-09",
     end: "2026-06",
-    title: "Master - Business Informatics",
-    org: "TU Wien - Grade 1.0",
-    description:
-      "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
+    title: { en: "Master - Business Informatics", de: "Master - Business Informatics" },
+    org: { en: "TU Wien - Grade 1.0", de: "TU Wien - Grade 1.0" },
+    description: {
+      en: "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
+      de: "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
+    },
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
@@ -133,10 +140,12 @@ export const education: TimelineEntry[] = [
   {
     start: "2025-07",
     end: "2025-07",
-    title: "Research Assistant",
-    org: "King's College London",
-    description:
-      "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+    title: { en: "Research Assistant", de: "Research Assistant" },
+    org: { en: "King's College London", de: "King's College London" },
+    description: {
+      en: "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+      de: "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+    },
     icon: "/logos/kings_college_london_logo.jpg",
     accentColor: "secondary",
     rowAdjustment: 1,
@@ -146,10 +155,15 @@ export const education: TimelineEntry[] = [
   {
     start: "2021-10",
     end: "2024-07",
-    title: "Bachelor - Software & Information Engineering",
-    org: "TU Wien - Grade 1.2",
-    description:
-      "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
+    title: {
+      en: "Bachelor - Software & Information Engineering",
+      de: "Bachelor - Software & Information Engineering",
+    },
+    org: { en: "TU Wien - Grade 1.2", de: "TU Wien - Grade 1.2" },
+    description: {
+      en: "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
+      de: "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
+    },
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
@@ -158,8 +172,8 @@ export const education: TimelineEntry[] = [
   {
     start: "2015-09",
     end: "2020-06",
-    title: "Matura - Informatics",
-    org: "HTL St. Pölten - Grade 1.0",
+    title: { en: "Matura - Informatics", de: "Matura - Informatics" },
+    org: { en: "HTL St. Pölten - Grade 1.0", de: "HTL St. Pölten - Grade 1.0" },
     description: null,
     icon: "/logos/htl_stpoelten_logo.jpg",
     accentColor: "primary",
@@ -169,8 +183,11 @@ export const education: TimelineEntry[] = [
   {
     start: "2025-09",
     end: "2025-09",
-    title: "Certified Associate - Back-End Developer - ABAP Cloud",
-    org: "SAP",
+    title: {
+      en: "Certified Associate - Back-End Developer - ABAP Cloud",
+      de: "Certified Associate - Back-End Developer - ABAP Cloud",
+    },
+    org: { en: "SAP", de: "SAP" },
     description: null,
     icon: "/logos/sap_logo.jpg",
     accentColor: "secondary",
@@ -180,8 +197,11 @@ export const education: TimelineEntry[] = [
   {
     start: "2021-04",
     end: "2021-04",
-    title: "Microsoft Azure Fundamentals (AZ-900)",
-    org: "Microsoft",
+    title: {
+      en: "Microsoft Azure Fundamentals (AZ-900)",
+      de: "Microsoft Azure Fundamentals (AZ-900)",
+    },
+    org: { en: "Microsoft", de: "Microsoft" },
     description: null,
     icon: "/logos/microsoft_logo.jpg",
     accentColor: "secondary",
@@ -190,8 +210,11 @@ export const education: TimelineEntry[] = [
   {
     start: "2019-02",
     end: "2019-02",
-    title: "Oracle Certified Associate, Java SE 8 Programmer",
-    org: "Oracle",
+    title: {
+      en: "Oracle Certified Associate, Java SE 8 Programmer",
+      de: "Oracle Certified Associate, Java SE 8 Programmer",
+    },
+    org: { en: "Oracle", de: "Oracle" },
     description: null,
     icon: "/logos/oracle_logo.jpg",
     accentColor: "secondary",
@@ -200,8 +223,8 @@ export const education: TimelineEntry[] = [
   {
     start: "2018-06",
     end: "2018-06",
-    title: "BEC Vantage C1",
-    org: "Cambridge English",
+    title: { en: "BEC Vantage C1", de: "BEC Vantage C1" },
+    org: { en: "Cambridge English", de: "Cambridge English" },
     description: null,
     icon: "/logos/cambridge_university_press_assessment_english_logo.jpg",
     accentColor: "secondary",

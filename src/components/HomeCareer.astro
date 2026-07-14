@@ -1,6 +1,10 @@
 ---
 import { education, work } from "@/data/career-timeline.ts";
 import Timeline from "@/components/Timeline.astro";
+import { t, type Locale } from "@/i18n/ui";
+import { getLocalizedPath } from "@/i18n/routing";
+
+const locale = (Astro.currentLocale ?? "en") as Locale;
 
 const importantWork = work
   .filter((entry) => entry.important)
@@ -31,16 +35,17 @@ const allEntries = [...importantWork, ...importantEducation];
 ---
 
 <section class="container">
-  <h1>Career</h1>
-  <p>My professional journey through work and education.</p>
+  <h1>{t(locale, "nav.career")}</h1>
+  <p>{t(locale, "home.career.subtitle")}</p>
 </section>
 
 <Timeline entries={allEntries} rowHeight="10px" />
 
 <section class="container">
   <p>
-    For a more thorough exploration, refer to the dedicated <a href="/career" class="underline"
-      >Career</a
-    > page.
+    {t(locale, "home.career.seeMore")}
+    {" "}
+    <a href={getLocalizedPath("/career", locale)} class="underline">{t(locale, "nav.career")}</a>
+    {t(locale, "home.career.seeMorePage")}
   </p>
 </section>

@@ -4,12 +4,28 @@ import { ClientRouter } from "astro:transitions";
 import "@/styles/index.css";
 import NavBar from "@/components/NavBar.astro";
 import Footer from "@/components/Footer.astro";
-import { getLanguageFromPath } from "@/util/language.ts";
+import { t, type Locale } from "@/i18n/ui";
+import { getLocalizedPath } from "@/i18n/routing";
 
-const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+
+const locale = (Astro.currentLocale ?? "en") as Locale;
+const currentPath = Astro.url.pathname;
+const enHref = getLocalizedPath(currentPath, "en");
+const deHref = getLocalizedPath(currentPath, "de");
+
+const site = "https://andreas-hell.ddns.net";
+const canonical = `${site}${currentPath}`;
+const pageTitle = title ? `${title} | Andreas Hell` : t(locale, "meta.title");
+const pageDescription = description ?? t(locale, "meta.description");
 ---
 
-<html lang={isDe ? "de" : "en"}>
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,31 +43,25 @@ const { isDe, enHref, deHref } = getLanguageFromPath(Astro.url.pathname);
       })();
     </script>
 
-    <title>Andreas Hell | Full-Stack Developer</title>
-    <meta
-      name="description"
-      content="Portfolio of Andreas Hell, Full-Stack Developer. End-to-End Engineering, built to be relied on."
-    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://andreas-hell.ddns.net/" />
+    <link rel="canonical" href={canonical} />
 
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://andreas-hell.ddns.net/" />
-    <meta property="og:title" content="Andreas Hell | Full-Stack Developer" />
-    <meta
-      property="og:description"
-      content="Portfolio of Andreas Hell, Full-Stack Developer. End-to-End Engineering, built to be relied on."
-    />
-    <meta property="og:image" content="https://andreas-hell.ddns.net/favicon/favicon-96x96.png" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={`${site}/favicon/favicon-96x96.png`} />
 
     <meta name="generator" content={Astro.generator} />
 
-    <link rel="alternate" hreflang="de" href={"https://andreas-hell.ddns.net" + deHref} />
-    <link rel="alternate" hreflang="en" href={"https://andreas-hell.ddns.net" + enHref} />
-    <link rel="alternate" hreflang="x-default" href={"https://andreas-hell.ddns.net" + enHref} />
+    <link rel="alternate" hreflang="de" href={site + deHref} />
+    <link rel="alternate" hreflang="en" href={site + enHref} />
+    <link rel="alternate" hreflang="x-default" href={site + enHref} />
 
     <ClientRouter />
   </head>

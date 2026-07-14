@@ -1,3 +1,5 @@
+import type { LocalizedText } from "@/i18n/ui";
+
 export type SkillLevel = "familiar" | "regular" | "heavy";
 
 export type SkillContext = "work" | "education" | "private";
@@ -10,22 +12,31 @@ export interface Skill {
 }
 
 export interface SkillGroup {
-  title: string;
+  title: LocalizedText;
   skills: Skill[];
   important: boolean;
 }
 
 export const skillContexts: SkillContext[] = ["work", "education", "private"];
 
-export const skillLevels: { level: SkillLevel; label: string }[] = [
-  { level: "familiar", label: "familiar" },
-  { level: "regular", label: "regular use" },
-  { level: "heavy", label: "heavy / daily use" },
+export const skillLevels: { level: SkillLevel; label: LocalizedText }[] = [
+  {
+    level: "familiar",
+    label: { en: "familiar", de: "vertraut" },
+  },
+  {
+    level: "regular",
+    label: { en: "regular use", de: "regelmäßige Nutzung" },
+  },
+  {
+    level: "heavy",
+    label: { en: "heavy / daily use", de: "intensiv / täglich" },
+  },
 ];
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: "Programming Languages",
+    title: { en: "Programming Languages", de: "Programmiersprachen" },
     important: true,
     skills: [
       { name: "Java", contexts: { work: "heavy", education: "regular", private: "regular" } },
@@ -52,7 +63,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Frameworks & Libraries",
+    title: { en: "Frameworks & Libraries", de: "Frameworks & Bibliotheken" },
     important: true,
     skills: [
       { name: "Spring Boot", contexts: { work: "heavy", private: "familiar" } },
@@ -73,7 +84,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Databases & Storage",
+    title: { en: "Databases & Storage", de: "Datenbanken & Speicher" },
     important: true,
     skills: [
       {
@@ -88,7 +99,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Cloud & DevOps",
+    title: { en: "Cloud & DevOps", de: "Cloud & DevOps" },
     important: true,
     skills: [
       { name: "Git", contexts: { work: "heavy", education: "regular", private: "regular" } },
@@ -110,7 +121,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Architecture",
+    title: { en: "Architecture", de: "Architektur" },
     important: true,
     skills: [
       { name: "Monolith", contexts: { work: "heavy", education: "regular", private: "regular" } },
@@ -148,7 +159,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Testing",
+    title: { en: "Testing", de: "Testing" },
     important: false,
     skills: [
       {
@@ -163,7 +174,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Supplementary Technologies",
+    title: { en: "Supplementary Technologies", de: "Ergänzende Technologien" },
     important: false,
     skills: [
       { name: "GLSP", contexts: { education: "heavy" } },
@@ -174,7 +185,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Tools",
+    title: { en: "Tools", de: "Werkzeuge" },
     important: false,
     skills: [
       { name: "IntelliJ", contexts: { work: "heavy", education: "regular", private: "heavy" } },
@@ -184,7 +195,7 @@ export const skillGroups: SkillGroup[] = [
     ],
   },
   {
-    title: "Languages",
+    title: { en: "Languages", de: "Sprachen" },
     important: false,
     skills: [
       { name: "German", contexts: { work: "heavy", education: "heavy", private: "heavy" } },

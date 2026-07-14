@@ -1,6 +1,9 @@
 ---
 import type { Project } from "@/data/projects.ts";
 import type { SkillContext } from "@/data/skills.ts";
+import { t, tTemplate, pick, type Locale } from "@/i18n/ui";
+import { formatDateRange } from "@/util/format.ts";
+import { getLocalizedPath } from "@/i18n/routing.ts";
 
 interface Props {
   project: Project;
@@ -9,40 +12,13 @@ interface Props {
 
 const { project, linkable = false } = Astro.props;
 
+const locale = (Astro.currentLocale ?? "en") as Locale;
 const headingId = linkable ? project.id : undefined;
 
-const monthNames = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-const formatDate = (dateStr: string) => {
-  const [year, month] = dateStr.split("-").map(Number);
-  return `${monthNames[month - 1]} ${year}`;
-};
-
-const formatDateRange = (start: string, end: string | null) => {
-  if (start === end) {
-    return formatDate(start);
-  }
-
-  return `${formatDate(start)} — ${end ? formatDate(end) : "Present"}`;
-};
-
 const contextLabel: Record<SkillContext, string> = {
-  work: "Work",
-  education: "Education",
-  private: "Private",
+  work: t(locale, "context.work"),
+  education: t(locale, "context.education"),
+  private: t(locale, "context.private"),
 };
 
 const contextColor: Record<SkillContext, string> = {
@@ -56,8 +32,9 @@ const visibleSkills = project.skills.slice(0, maxVisibleSkills);
 const hiddenSkills = project.skills.slice(maxVisibleSkills);
 const hasHiddenSkills = hiddenSkills.length > 0;
 
-const firstParagraph = project.description[0];
-const extraParagraphs = project.description.slice(1);
+const description = pick(locale, project.description);
+const firstParagraph = description[0];
+const extraParagraphs = description.slice(1);
 const hasExtraParagraphs = extraParagraphs.length > 0;
 ---
 
@@ -69,15 +46,21 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     >
       {contextLabel[project.context]}
     </span>
-    <span class="date-range">{formatDateRange(project.start, project.end)}</span>
+    <span class="date-range">{formatDateRange(locale, project.start, project.end)}</span>
   </div>
 
   <div class="card-header">
     <h2>
-      {project.title}
+      {project.title[locale]}
       {
         linkable && (
-          <a href={`#${headingId}`} class="heading-anchor" aria-label={`Link to ${project.title}`}>
+          <a
+            href={`${getLocalizedPath("/projects", locale)}#${headingId}`}
+            class="heading-anchor"
+            aria-label={tTemplate(locale, "project.linkToProject", {
+              title: project.title[locale],
+            })}
+          >
             <svg
               viewBox="0 0 24 24"
               width="18"
@@ -96,7 +79,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
         )
       }
     </h2>
-    {project.org && <span class="org">{project.org}</span>}
+    {project.org && <span class="org">{project.org[locale]}</span>}
   </div>
 
   <div class="description-block">
@@ -111,7 +94,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
           aria-expanded="false"
           data-toggle-scope=".description-block"
         >
-          Read more
+          {t(locale, "project.readMore")}
         </button>
       )
     }
@@ -124,7 +107,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
           aria-expanded="true"
           data-toggle-scope=".description-block"
         >
-          Show less
+          {t(locale, "project.showLess")}
         </button>
       )
     }
@@ -136,7 +119,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
       hasHiddenSkills && (
         <li class="skill-toggle toggle-more">
           <span tabindex="0" role="button" aria-expanded="false" data-toggle-scope=".skill-tags">
-            +{hiddenSkills.length} more
+            {tTemplate(locale, "project.moreSkills", { n: hiddenSkills.length })}
           </span>
         </li>
       )
@@ -146,7 +129,7 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
       hasHiddenSkills && (
         <li class="skill-toggle toggle-less">
           <span tabindex="0" role="button" aria-expanded="true" data-toggle-scope=".skill-tags">
-            Show less
+            {t(locale, "project.showLess")}
           </span>
         </li>
       )
@@ -154,21 +137,21 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
   </ul>
 
   {
-    (project.links.repo || project.links.demo) && (
+    (project.links.repo || project.links.demo || project.links.doc) && (
       <div class="card-links">
         {project.links.repo && (
           <a href={project.links.repo} class="underline" target="_blank" rel="noopener noreferrer">
-            Repository &rarr;
+            {t(locale, "project.repository")} &rarr;
           </a>
         )}
         {project.links.demo && (
           <a href={project.links.demo} class="underline" target="_blank" rel="noopener noreferrer">
-            Demo &rarr;
+            {t(locale, "project.demo")} &rarr;
           </a>
         )}
         {project.links.doc && (
           <a href={project.links.doc} class="underline" target="_blank" rel="noopener noreferrer">
-            Documentation &rarr;
+            {t(locale, "project.documentation")} &rarr;
           </a>
         )}
       </div>

@@ -114,24 +114,18 @@
 
   const syncPills = () => {
     const current =
-      document.documentElement.getAttribute("data-theme") === "light"
-        ? "light"
-        : "dark";
+      document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark";
     document
       .querySelectorAll<HTMLElement>(".toggle-pill[aria-label='Color theme']")
       .forEach((pill) => {
         if (pill.dataset.bound === "true") return;
         pill.dataset.bound = "true";
 
-        const segments =
-          pill.querySelectorAll<HTMLButtonElement>(".toggle-pill-seg");
+        const segments = pill.querySelectorAll<HTMLButtonElement>(".toggle-pill-seg");
 
         // Reflect current theme into the pill segments
         segments.forEach((s) =>
-          s.setAttribute(
-            "aria-pressed",
-            s.dataset.themeVal === current ? "true" : "false",
-          ),
+          s.setAttribute("aria-pressed", s.dataset.themeVal === current ? "true" : "false"),
         );
 
         pill.addEventListener("click", (e) => {
@@ -142,9 +136,7 @@
           if (!val) return;
 
           applyTheme(val);
-          segments.forEach((s) =>
-            s.setAttribute("aria-pressed", s === seg ? "true" : "false"),
-          );
+          segments.forEach((s) => s.setAttribute("aria-pressed", s === seg ? "true" : "false"));
         });
       });
   };

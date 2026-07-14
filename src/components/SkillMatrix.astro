@@ -1,6 +1,7 @@
 ---
-import type { SkillGroup, SkillLevel } from "@/data/skills.ts";
+import type { SkillGroup } from "@/data/skills.ts";
 import { skillContexts, skillLevels } from "@/data/skills.ts";
+import { t, pick, type Locale } from "@/i18n/ui";
 
 interface Props {
   groups: SkillGroup[];
@@ -8,43 +9,46 @@ interface Props {
 
 const { groups } = Astro.props;
 
-const levelLabel: Record<SkillLevel, string> = {
-  familiar: "familiar",
-  regular: "regular use",
-  heavy: "heavy / daily use",
-};
+const locale = (Astro.currentLocale ?? "en") as Locale;
 
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+const levelLabel = Object.fromEntries(
+  skillLevels.map(({ level, label }) => [level, pick(locale, label)]),
+);
+
+const contextLabel: Record<string, string> = {
+  work: t(locale, "context.work"),
+  education: t(locale, "context.education"),
+  private: t(locale, "context.private"),
+};
 ---
 
 <section class="container skill-matrix">
-  <ul class="legend" aria-label="Skill level legend">
+  <ul class="legend" aria-label={t(locale, "skill.levelLegend")}>
     {
       skillLevels.map(({ level, label }) => (
         <li class="legend-item">
           <span class={`symbol ${level}`} aria-hidden="true" />
-          <span>{label}</span>
+          <span>{pick(locale, label)}</span>
         </li>
       ))
     }
     <li class="legend-item">
       <span class="symbol-slot" aria-hidden="true"></span>
-      <span>not used (blank cell)</span>
+      <span>{t(locale, "skill.notUsed")}</span>
     </li>
   </ul>
 
   <table class="skills-table">
     <caption class="sr-only">
-      Technologies grouped by category, showing usage level across work, education, and personal
-      contexts.
+      {t(locale, "skill.caption")}
     </caption>
     <thead>
       <tr>
-        <th scope="col" class="skill-col">Skill</th>
+        <th scope="col" class="skill-col">{t(locale, "skill.colSkill")}</th>
         {
           skillContexts.map((ctx) => (
             <th scope="col" class="ctx-col">
-              {capitalize(ctx)}
+              {contextLabel[ctx]}
             </th>
           ))
         }
@@ -55,7 +59,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
         <tbody>
           <tr>
             <th colspan={skillContexts.length + 1} class="group-header">
-              {group.title}
+              {pick(locale, group.title)}
             </th>
           </tr>
           {group.skills.map((skill) => (
@@ -199,7 +203,7 @@ const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
   }
 
   /* Mobile breakpoint */
-  @media (max-width: 740px) {
+  @media (max-width: 780px) {
     .skill-matrix {
       padding: 0 1rem 1.5rem;
     }

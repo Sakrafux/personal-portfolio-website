@@ -3,13 +3,17 @@ import { Image } from "astro:assets";
 
 import SocialLinks from "@/components/SocialLinks.astro";
 import mountFuji from "@/assets/mount_fuji.jpg";
+import { t, type Locale } from "@/i18n/ui";
+
+const locale = (Astro.currentLocale ?? "en") as Locale;
+const isDe = locale === "de";
 ---
 
 <section class="hero-section">
   <div class="hero">
     <Image
       src={mountFuji}
-      alt="Andreas at Mount Fuji"
+      alt={isDe ? "Andreas am Mount Fuji" : "Andreas at Mount Fuji"}
       width={2000}
       height={612}
       loading="eager"
@@ -22,27 +26,62 @@ import mountFuji from "@/assets/mount_fuji.jpg";
     <div class="overlay">
       <div class="copy">
         <h1>Andreas Hell</h1>
-        <p class="title">Full-Stack Developer</p>
-        <p class="tagline">End-to-End Engineering, built to be relied on.</p>
+        <p class="title">{t(locale, "home.hero.title")}</p>
+        <p class="tagline">{t(locale, "home.hero.tagline")}</p>
       </div>
     </div>
   </div>
 
   <div class="container">
     <p class="statement">
-      I build <span class="emphasis">reliable software</span> across frontend, backend, data, and deployment.
+      {
+        isDe ? (
+          <>
+            Ich baue <em>zuverlässige Software</em> über Frontend, Backend, Daten und Bereitstellung
+            hinweg.
+          </>
+        ) : (
+          <>
+            I build <em>reliable software</em> across frontend, backend, data, and deployment.
+          </>
+        )
+      }
     </p>
     <p>
-      I have been developing software systems for more than 10 years and enjoy building software
-      that is not only functional but also <span class="emphasis"
-        >reliable and feels great to use</span
-      > from end to end. At my core, I love <span class="emphasis">solving issues</span>, whether
-      they be customers' <span class="emphasis">business problems</span>, private hobby projects, or
-      academic challenges (resulting in graduation with distinction).
+      {
+        isDe ? (
+          <>
+            Ich entwickle seit mehr als 10 Jahren Softwaresysteme und baue gerne Software, die nicht
+            nur funktional ist, sondern <em>zuverlässig ist und sich gut bedienen lässt</em> von
+            Ende zu Ende. Im Kern liebe ich das <em>Lösen von Problemen</em>, sei es die{" "}
+            <em>Geschäftsprobleme</em> von Kunden, private Hobbyprojekte oder akademische
+            Herausforderungen (abgeschlossen mit Auszeichnung).
+          </>
+        ) : (
+          <>
+            I have been developing software systems for more than 10 years and enjoy building
+            software that is not only functional but also <em>reliable and feels great to use</em>{" "}
+            from end to end. At my core, I love <em>solving issues</em>, whether they be customers'{" "}
+            <em>business problems</em>, private hobby projects, or academic challenges (resulting in
+            graduation with distinction).
+          </>
+        )
+      }
     </p>
     <p>
-      I am most experienced with <span class="emphasis">Java, TypeScript, and Go</span> but also highly
-      flexible and eager to learn more.
+      {
+        isDe ? (
+          <>
+            Ich bin am erfahrensten mit <em>Java, TypeScript und Go,</em> aber auch sehr flexibel
+            und lerne gern dazu.
+          </>
+        ) : (
+          <>
+            I am most experienced with <em>Java, TypeScript, and Go</em> but also highly flexible
+            and eager to learn more.
+          </>
+        )
+      }
     </p>
     <SocialLinks withBorder />
   </div>
@@ -126,7 +165,8 @@ import mountFuji from "@/assets/mount_fuji.jpg";
     line-height: 1.1;
   }
 
-  .emphasis {
+  em {
     color: var(--color-accent);
+    font-style: normal;
   }
 </style>

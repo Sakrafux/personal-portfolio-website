@@ -1,6 +1,7 @@
 ---
 import type { TimelineEntryExtended } from "@/data/career-timeline.ts";
 import TimelineColumn from "@/components/TimelineColumn.astro";
+import { t, type Locale } from "@/i18n/ui";
 
 interface Props {
   entries: TimelineEntryExtended[];
@@ -8,6 +9,8 @@ interface Props {
 }
 
 const { entries, rowHeight } = Astro.props;
+
+const locale = (Astro.currentLocale ?? "en") as Locale;
 
 const now = new Date();
 const currentYear = now.getFullYear();
@@ -64,7 +67,7 @@ for (let y = currentYear; y >= earliestYear; y--) {
 ---
 
 <section class="container timeline-wrapper">
-  <div class="timeline-toggle" role="tablist" aria-label="Career timeline view">
+  <div class="timeline-toggle" role="tablist" aria-label={t(locale, "timeline.label")}>
     <button
       type="button"
       class="toggle-btn active"
@@ -72,10 +75,10 @@ for (let y = currentYear; y >= earliestYear; y--) {
       role="tab"
       aria-selected="true"
     >
-      Work
+      {t(locale, "timeline.work")}
     </button>
     <button type="button" class="toggle-btn" data-view="edu" role="tab" aria-selected="false">
-      Education
+      {t(locale, "timeline.education")}
     </button>
   </div>
 
@@ -84,8 +87,12 @@ for (let y = currentYear; y >= earliestYear; y--) {
     data-view="work"
     style={`grid-template-rows: auto repeat(${totalMonths}, var(--row-height)); ${rowHeight ? "--row-height: " + rowHeight : ""}`}
   >
-    <h2 class="header work-header" style="grid-row: 1; grid-column: 1">Work</h2>
-    <h2 class="header edu-header" style="grid-row: 1; grid-column: 5">Education</h2>
+    <h2 class="header work-header" style="grid-row: 1; grid-column: 1">
+      {t(locale, "timeline.work")}
+    </h2>
+    <h2 class="header edu-header" style="grid-row: 1; grid-column: 5">
+      {t(locale, "timeline.education")}
+    </h2>
 
     {
       yearRanges
@@ -202,7 +209,7 @@ for (let y = currentYear; y >= earliestYear; y--) {
     grid-column: 4;
   }
 
-  @media (max-width: 740px) {
+  @media (max-width: 780px) {
     .timeline-wrapper {
       padding: 0 1rem 1.5rem;
     }

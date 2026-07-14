@@ -1,23 +1,25 @@
 ---
 import SkillMatrix from "@/components/SkillMatrix.astro";
 import { filterSkillScore, skillGroups, sortSkillGroups } from "@/data/skills.ts";
+import { t, type Locale } from "@/i18n/ui";
+import { getLocalizedPath } from "@/i18n/routing";
 
+const locale = (Astro.currentLocale ?? "en") as Locale;
 const groups = filterSkillScore(sortSkillGroups(skillGroups)).filter((group) => group.important);
 ---
 
 <section class="container">
-  <h1>Skills</h1>
-  <p>
-    Where and how much I have used each technology across work, education, and personal projects.
-  </p>
+  <h1>{t(locale, "nav.skills")}</h1>
+  <p>{t(locale, "home.skills.subtitle")}</p>
 </section>
 
 <SkillMatrix groups={groups} />
 
 <section class="container">
   <p>
-    For a more thorough exploration, refer to the dedicated <a href="/skills" class="underline"
-      >Skills</a
-    > page.
+    {t(locale, "home.career.seeMore")}
+    {" "}
+    <a href={getLocalizedPath("/skills", locale)} class="underline">{t(locale, "nav.skills")}</a>
+    {t(locale, "home.career.seeMorePage")}
   </p>
 </section>
