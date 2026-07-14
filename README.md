@@ -245,3 +245,16 @@ Org/school logos used by the career timeline live in `public/logos/` and are ref
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
   - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline
+
+### Professionalism / Polish
+- [ ] Add `robots.txt` in `public/` referencing the sitemap
+- [ ] Add `@astrojs/sitemap` integration (auto-generates `sitemap.xml` with `hreflang` alternates for `en`/`de`)
+- [ ] Add JSON-LD `Person` schema + `meta name="author"` in `BaseLayout.astro`
+- [ ] Create a proper 1200×630 OG social image (the 96×96 favicon currently used looks broken in previews)
+- [ ] Optional: add `twitter:card` meta tags as a fallback for non-OG consumers (Slack, Discord, iMessage, LinkedIn, some Mastodon clients)
+- [ ] Add `meta name="theme-color"` (light + dark variants) for browser chrome / OS integrations
+- [ ] Add a branded `src/pages/404.astro` instead of falling back to the default
+- [ ] Add a `check`/`typecheck` script to `package.json` (run `astro check`)
+- [ ] Add `.well-known/security.txt` in `public/` with a `mailto:` or `https://` contact for vulnerability reports
+- [ ] Populate `LICENSE`
+- [ ] Accessibility audit: skip-to-content link, `prefers-reduced-motion` handling, focus styles, alt text
