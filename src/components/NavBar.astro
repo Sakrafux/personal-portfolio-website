@@ -13,7 +13,8 @@ const links = [
 ];
 
 const currentPath = Astro.url.pathname;
-const isActive = (href: string) => currentPath === href;
+const normalize = (p: string) => (p !== "/" ? p.replace(/\/$/, "") : p);
+const isActive = (href: string) => normalize(currentPath) === normalize(href);
 ---
 
 <header>
