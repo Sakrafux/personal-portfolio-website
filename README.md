@@ -6,8 +6,7 @@ All content lives in `src/data/` and `public/`; the Astro components only render
 
 ## Tech Stack
 
-- **Framework:** Astro 7 (static HTML output, zero JS by default, island components via Preact only when interactive)
-- **UI rendering:** `@astrojs/preact` 6 + Preact 10 (available for islands; currently unused on pages)
+- **Framework:** Astro 7 (static HTML output, zero JS by default)
 - **Language:** TypeScript (strict mode via `astro/tsconfigs/strict`)
 - **Package manager:** pnpm (see `pnpm-lock.yaml`, `pnpm-workspace.yaml`)
 - **Node:** `>=22.12.0` (engines constraint in `package.json`)
@@ -30,7 +29,7 @@ Place immutable files (PDFs, favicons, org logos) directly under `public/` — t
 ## Project Structure
 
 ```
-astro.config.mjs          Astro config: dev port 3000, Preact integration
+astro.config.mjs          Astro config: dev port 3000
 tsconfig.json             Strict TS, @/* path alias
 .prettierrc.mjs           Prettier + Astro plugin, 2-space indent, double quotes
 package.json              Scripts: dev / build / preview / astro (no lint/typecheck script yet)
@@ -236,6 +235,10 @@ They are wired in `src/layouts/BaseLayout.astro`:
 
 Org/school logos used by the career timeline live in `public/logos/` and are referenced by `icon` paths in `src/data/career-timeline.ts` (e.g. `"/logos/dynatrace_logo.jpg"`).
 
+## License
+This project is not licensed. All rights reserved. © Andreas Hell. 
+You may view the code for educational purposes, but you may not copy or redistribute it.
+
 ## TODOs
 
 - Check and translate all texts
@@ -247,14 +250,4 @@ Org/school logos used by the career timeline live in `public/logos/` and are ref
   - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline
 
 ### Professionalism / Polish
-- [ ] Add `robots.txt` in `public/` referencing the sitemap
-- [ ] Add `@astrojs/sitemap` integration (auto-generates `sitemap.xml` with `hreflang` alternates for `en`/`de`)
-- [ ] Add JSON-LD `Person` schema + `meta name="author"` in `BaseLayout.astro`
-- [ ] Create a proper 1200×630 OG social image (the 96×96 favicon currently used looks broken in previews)
-- [ ] Optional: add `twitter:card` meta tags as a fallback for non-OG consumers (Slack, Discord, iMessage, LinkedIn, some Mastodon clients)
-- [ ] Add `meta name="theme-color"` (light + dark variants) for browser chrome / OS integrations
-- [ ] Add a branded `src/pages/404.astro` instead of falling back to the default
-- [ ] Add a `check`/`typecheck` script to `package.json` (run `astro check`)
-- [ ] Add `.well-known/security.txt` in `public/` with a `mailto:` or `https://` contact for vulnerability reports
-- [ ] Populate `LICENSE`
 - [ ] Accessibility audit: skip-to-content link, `prefers-reduced-motion` handling, focus styles, alt text

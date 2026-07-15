@@ -51,6 +51,10 @@ const dict = {
     "page.projects.subtitle": "A collection of projects from work, education, and personal work.",
     "home.skills.subtitle":
       "Where and how much I have used each technology across work, education, and personal projects.",
+    "error.code": "404",
+    "error.title": "Page not found",
+    "error.description": "The page you are looking for does not exist or has moved.",
+    "error.back": "Back to home",
   },
   de: {
     "nav.home": "Start",
@@ -93,6 +97,10 @@ const dict = {
       "Eine Sammlung von Projekten aus Arbeit, Ausbildung und persönlichen Arbeiten.",
     "home.skills.subtitle":
       "Wo und wie oft ich jede Technologie in Arbeit, Ausbildung und privaten Projekten eingesetzt habe.",
+    "error.code": "404",
+    "error.title": "Seite nicht gefunden",
+    "error.description": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "error.back": "Zurück zur Startseite",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 

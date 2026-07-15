@@ -1,0 +1,44 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { t, type Locale } from "@/i18n/ui";
+import { getLocalizedPath } from "@/i18n/routing";
+
+const locale = (Astro.currentLocale ?? "en") as Locale;
+const homeHref = getLocalizedPath("/", locale);
+---
+
+<BaseLayout title={t(locale, "error.title")} description={t(locale, "error.description")}>
+  <section class="container error">
+    <p class="code">{t(locale, "error.code")}</p>
+    <h1>{t(locale, "error.title")}</h1>
+    <p>{t(locale, "error.description")}</p>
+    <a class="btn-primary" href={homeHref}>{t(locale, "error.back")}</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .error {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .code {
+    margin-bottom: 1rem;
+    color: var(--color-accent);
+    font-family: var(--font-mono);
+    font-size: clamp(5rem, 15vw, 9rem);
+    line-height: 1;
+  }
+
+  .error h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .error p {
+    margin-bottom: 2rem;
+  }
+</style>

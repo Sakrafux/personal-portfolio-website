@@ -1,5 +1,6 @@
 ---
 import { getLocaleFromPath } from "@/i18n/routing.ts";
+import { person, cvPath } from "@/data/person";
 interface Props {
   withBorder?: boolean;
 }
@@ -12,22 +13,22 @@ const isDe = activeLocale === "de";
 
 const links = [
   {
-    href: "https://github.com/Sakrafux",
+    href: person.github,
     label: "GitHub",
     icon: "github",
   },
   {
-    href: "https://www.linkedin.com/in/andreas-hell-681939244",
+    href: person.linkedin,
     label: "LinkedIn",
     icon: "linkedin",
   },
   {
-    href: "mailto:andhell03+portfolio@gmail.com",
+    href: `mailto:${person.email}`,
     label: "Email",
     icon: "email",
   },
   {
-    href: isDe ? "/documents/CV_deutsch.pdf" : "/documents/CV_english.pdf",
+    href: cvPath[activeLocale],
     label: "Download CV",
     icon: "cv",
   },
