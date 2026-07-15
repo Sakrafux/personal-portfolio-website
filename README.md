@@ -248,6 +248,3 @@ You may view the code for educational purposes, but you may not copy or redistri
 ### Career
 - need to consider the fact that the career timeline is static, i.e., how can I show always an expanding timeline
   - best solved using a monthly cron job that just rebuilds and deploys the website with the updated timeline
-
-### Professionalism / Polish
-- [ ] Accessibility audit: skip-to-content link, `prefers-reduced-motion` handling, focus styles, alt text

@@ -67,6 +67,18 @@ html {
   scrollbar-gutter: stable;
 }
 
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   background-color: var(--color-bg-main);
   color: var(--color-text-muted);
@@ -121,6 +133,15 @@ a:hover {
 
 a.underline {
   text-decoration: underline;
+}
+
+/* Visible keyboard focus for all interactive elements */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* Muted Navigation Links (used in NavBar & Footer) */

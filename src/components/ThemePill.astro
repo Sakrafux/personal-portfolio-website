@@ -105,7 +105,8 @@
     const doc = document as Document & {
       startViewTransition?: (cb: () => void) => void;
     };
-    if (typeof doc.startViewTransition === "function") {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduceMotion && typeof doc.startViewTransition === "function") {
       doc.startViewTransition(apply);
     } else {
       apply();
