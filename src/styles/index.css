@@ -159,16 +159,16 @@ summary:focus-visible {
 .btn-primary {
   display: inline-block;
   background-color: var(--color-accent);
-  color: #12141c; /* High contrast dark text on the mint button */
+  color: var(--color-bg-main);
   font-weight: 600;
   padding: 0.75rem 1.5rem;
-  border-radius: 6px;
   transition:
     background-color 0.2s ease,
     transform 0.1s ease;
 }
 
 .btn-primary:hover {
+  color: var(--color-bg-main);
   background-color: var(--color-accent-hover);
   text-decoration: none;
 }
