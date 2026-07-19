@@ -5,6 +5,9 @@
 # Navigate to your repository directory
 cd /volume2/apps/personal-portfolio-website
 
+# Query the latest changes
+git fetch --all
+
 # Pull the latest changes from Git
 git pull origin main
 
