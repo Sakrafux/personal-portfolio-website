@@ -241,7 +241,6 @@ You may view the code for educational purposes, but you may not copy or redistri
 
 ## TODOs
 
-- Check and translate all texts
 - Deploy website
 - Install Umami or something for simple web analytics
 

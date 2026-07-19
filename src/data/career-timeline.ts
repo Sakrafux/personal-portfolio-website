@@ -71,7 +71,7 @@ export const work: TimelineEntry[] = [
   {
     start: "2021-08",
     end: "2021-12",
-    title: { en: "Full-Stack Developer", de: "Full-Stack Developer" },
+    title: { en: "Full-Stack Developer", de: "Full-Stack Entwickler" },
     org: { en: "Freelance", de: "Freelance" },
     description: null,
     icon: null,
@@ -93,8 +93,8 @@ export const work: TimelineEntry[] = [
   {
     start: "2020-07",
     end: "2020-12",
-    title: { en: "Military Service", de: "Military Service" },
-    org: { en: "Austrian Armed Forces", de: "Austrian Armed Forces" },
+    title: { en: "Military Service", de: "Präsenzdienst" },
+    org: { en: "Austrian Armed Forces", de: "Bundesheer" },
     description: null,
     icon: "/logos/bundesheer_logo.jpg",
     accentColor: "primary",
@@ -103,7 +103,7 @@ export const work: TimelineEntry[] = [
   {
     start: "2019-08",
     end: "2019-08",
-    title: { en: "Summer Intern", de: "Summer Intern" },
+    title: { en: "Summer Intern", de: "Sommerpraktikant" },
     org: { en: "Wien IT", de: "Wien IT" },
     description: null,
     icon: "/logos/wienit_logo.jpg",
@@ -113,7 +113,7 @@ export const work: TimelineEntry[] = [
   {
     start: "2017-08",
     end: "2017-08",
-    title: { en: "Summer Intern", de: "Summer Intern" },
+    title: { en: "Summer Intern", de: "Sommerpraktikant" },
     org: { en: "SNAP Consulting", de: "SNAP Consulting" },
     description: null,
     icon: "/logos/snap_consulting_logo.jpg",
@@ -130,7 +130,7 @@ export const education: TimelineEntry[] = [
     org: { en: "TU Wien - Grade 1.0", de: "TU Wien - Grade 1.0" },
     description: {
       en: "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
-      de: "Advanced studies with a special focus on Economic Modeling and Information System Engineering, which I finished with distinction.",
+      de: "Vertiefendes Studium mit speziellen Fokus auf Economic Modeling und Information System Engineering, welches ich mit Auszeichnugn abgeschlossen habe.",
     },
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
@@ -144,7 +144,7 @@ export const education: TimelineEntry[] = [
     org: { en: "King's College London", de: "King's College London" },
     description: {
       en: "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
-      de: "I integrated textual grammar support using Langium and graphical modeling using GLSP, in order to enrich graphical models with LSP-conforming text elements.",
+      de: "Ich habe textuellen Grammatik Support mithilfe von Langium in grafische Modellierung mittels GLSP integriert. Das erlaubt für die Verwendung von LSP-konformen Text-Elementen in grafischer Modellierung.",
     },
     icon: "/logos/kings_college_london_logo.jpg",
     accentColor: "secondary",
@@ -162,7 +162,7 @@ export const education: TimelineEntry[] = [
     org: { en: "TU Wien - Grade 1.2", de: "TU Wien - Grade 1.2" },
     description: {
       en: "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
-      de: "Foundational Computer Science degree touching on a wide array of related fields, from university-level mathematics and hardware basics to distributed systems and project development, giving a broad knowledge basis. I finished the degree with distinction.",
+      de: "Grundlegender Computer Science Studium, welches eine Vielzahl an Bereichen anschneidet. Angefangen bei Universitäts-Level Mathematik und Hardware Grundlagen über Verteilte Syteme und Projekt-Entwicklung, womit man eine breite Wissensbasis erhält. Ich habe das Studium mit Auszeichnung abgeschlossen.",
     },
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
@@ -172,7 +172,7 @@ export const education: TimelineEntry[] = [
   {
     start: "2015-09",
     end: "2020-06",
-    title: { en: "Matura - Informatics", de: "Matura - Informatics" },
+    title: { en: "Matura - Informatics", de: "Matura - Informatik" },
     org: { en: "HTL St. Pölten - Grade 1.0", de: "HTL St. Pölten - Grade 1.0" },
     description: null,
     icon: "/logos/htl_stpoelten_logo.jpg",
