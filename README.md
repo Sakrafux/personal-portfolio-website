@@ -241,7 +241,6 @@ You may view the code for educational purposes, but you may not copy or redistri
 
 ## TODOs
 
-- Deploy website
 - Install Umami or something for simple web analytics
 
 ### Career
