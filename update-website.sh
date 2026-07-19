@@ -1,4 +1,6 @@
 #!/bin/bash
+# Script to execute on my webserver to use primarily via cron job
+# 0 0 1 * * /volume2/apps/personal-portfolio-website/update-website.sh > /dev/null 2>&1
 
 # Navigate to your repository directory
 cd /volume2/apps/personal-portfolio-website
