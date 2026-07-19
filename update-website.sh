@@ -23,5 +23,5 @@ docker rm portfolio-website || true
 docker run -d \
   --name portfolio-website \
   --restart always \
-  --network web \
+  --network reverse-proxy_web \
   portfolio-website:latest
