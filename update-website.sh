@@ -18,5 +18,5 @@ docker rm portfolio-website || true
 docker run -d \
   --name portfolio-website \
   --restart always \
-  -p 80:80 \
+  --network web \
   portfolio-website:latest
