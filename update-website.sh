@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Navigate to your repository directory
-cd /path/to/your/portfolio-repo
+cd /volume2/apps/personal-portfolio-website
 
 # Pull the latest changes from Git
 git pull origin main
