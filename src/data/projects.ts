@@ -43,7 +43,7 @@ export const projects: Project[] = [
     skills: ["Astro", "TypeScript", "HTML", "CSS", "JavaScript"],
     links: {
       repo: "https://github.com/Sakrafux/personal-portfolio-website",
-      demo: "https://andreas-hell.ddns.net",
+      demo: "https://www.andreashell.dev",
     },
     important: false,
   },
@@ -222,7 +222,7 @@ export const projects: Project[] = [
     ],
     links: {
       repo: "https://github.com/Sakrafux/family-tree-app",
-      demo: "https://andreas-hell.ddns.net/apps/family-tree/",
+      demo: "https://www.andreashell.dev/apps/family-tree/",
     },
     important: false,
   },

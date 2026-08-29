@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://andreas-hell.ddns.net",
+  site: "https://www.andreashell.dev",
   server: { port: 3000 },
   integrations: [
     sitemap({

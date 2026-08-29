@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://andreas-hell.ddns.net/sitemap-index.xml
+Sitemap: https://www.andreashell.dev/sitemap-index.xml

@@ -1,6 +1,6 @@
 # Andreas Hell | Full-Stack Developer
 
-Source for the personal portfolio at https://andreas-hell.ddns.net/.
+Source for the personal portfolio at https://www.andreashell.dev/.
 Static site built with [Astro](https://astro.build/) (static output, view transitions via `ClientRouter`), with **i18n** (`en` default + `de` prefixed) and a **dark/light theme** toggle persisted to `localStorage`.
 All content lives in `src/data/` and `public/`; the Astro components only render it.
 

@@ -18,9 +18,7 @@ const currentPath = Astro.url.pathname;
 const enHref = getLocalizedPath(currentPath, "en");
 const deHref = getLocalizedPath(currentPath, "de");
 
-const site = Astro.site
-  ? Astro.site.toString().replace(/\/$/, "")
-  : "https://andreas-hell.ddns.net";
+const site = Astro.site ? Astro.site.toString().replace(/\/$/, "") : "https://www.andreashell.dev";
 const canonical = `${site}${currentPath}`;
 const pageTitle = title ? `${title} | Andreas Hell` : t(locale, "meta.title");
 const pageDescription = description ?? t(locale, "meta.description");
