@@ -135,7 +135,7 @@ export const education: TimelineEntry[] = [
     icon: "/logos/tuwien_logo.jpg",
     accentColor: "primary",
     important: true,
-    projectRefs: ["mcp-server-glsp"],
+    projectRefs: ["mcp-server-glsp", "mcp-server-glsp-paper"],
   },
   {
     start: "2025-07",
@@ -150,7 +150,7 @@ export const education: TimelineEntry[] = [
     accentColor: "secondary",
     rowAdjustment: 1,
     important: true,
-    projectRefs: ["glsp-langium-integration"],
+    projectRefs: ["glsp-langium-integration", "glsp-langium-integration-paper"],
   },
   {
     start: "2021-10",

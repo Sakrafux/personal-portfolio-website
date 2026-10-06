@@ -113,28 +113,30 @@ const hasExtraParagraphs = extraParagraphs.length > 0;
     }
   </div>
 
-  <ul class="skill-tags">
-    {visibleSkills.map((skill) => <li>{skill}</li>)}
-    {
-      hasHiddenSkills && (
-        <li class="skill-toggle toggle-more">
-          <span tabindex="0" role="button" aria-expanded="false" data-toggle-scope=".skill-tags">
-            {tTemplate(locale, "project.moreSkills", { n: hiddenSkills.length })}
-          </span>
-        </li>
-      )
-    }
-    {hasHiddenSkills && hiddenSkills.map((skill) => <li class="skill-hidden">{skill}</li>)}
-    {
-      hasHiddenSkills && (
-        <li class="skill-toggle toggle-less">
-          <span tabindex="0" role="button" aria-expanded="true" data-toggle-scope=".skill-tags">
-            {t(locale, "project.showLess")}
-          </span>
-        </li>
-      )
-    }
-  </ul>
+  {
+    visibleSkills.length ? (
+      <ul class="skill-tags">
+        {visibleSkills.map((skill) => (
+          <li>{skill}</li>
+        ))}
+        {hasHiddenSkills && (
+          <li class="skill-toggle toggle-more">
+            <span tabindex="0" role="button" aria-expanded="false" data-toggle-scope=".skill-tags">
+              {tTemplate(locale, "project.moreSkills", { n: hiddenSkills.length })}
+            </span>
+          </li>
+        )}
+        {hasHiddenSkills && hiddenSkills.map((skill) => <li class="skill-hidden">{skill}</li>)}
+        {hasHiddenSkills && (
+          <li class="skill-toggle toggle-less">
+            <span tabindex="0" role="button" aria-expanded="true" data-toggle-scope=".skill-tags">
+              {t(locale, "project.showLess")}
+            </span>
+          </li>
+        )}
+      </ul>
+    ) : null
+  }
 
   {
     (project.links.repo || project.links.demo || project.links.doc) && (

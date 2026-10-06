@@ -27,6 +27,64 @@ export const sortProjects = (projects: Project[]): Project[] =>
 
 export const projects: Project[] = [
   {
+    id: "mcp-server-glsp-paper",
+    title: {
+      en: "Paper - Realizing a Model Context Protocol (MCP) Server for the Graphical Language Server Platform (GLSP)",
+      de: "Paper - Realizing a Model Context Protocol (MCP) Server for the Graphical Language Server Platform (GLSP)",
+    },
+    description: {
+      en: [
+        "Based on the work done in the course of my Master's Thesis, I publihsed an additional paper. https://doi.org/10.1145/3822455.3830317",
+        "Model-Driven Engineering (MDE) offers strong abstractions but remains hindered in practice by complex tooling and steep learning curves. Recent advances in Large Language Models (LLMs) promise intuitive, natural-language interaction with modeling environments; however, existing approaches—such as direct API interaction, DSL generation, or manipulation of serialized models—exhibit limited reliability, scalability, and semantic precision. This paper presents a structured integration of LLMs into graphical modeling environments via the Model Context Protocol (MCP). We design and implement a reusable MCP server for the Graphical Language Server Platform (GLSP), enabling LLM agents to interact with models through semantically grounded, tool-based operations rather than direct model generation. We contribute (i) a reference architecture for MCP-based integration into GLSP derived from a systematic literature review of MCP implementations, (ii) design principles for mapping modeling concepts to MCP primitives and abstraction levels, and (iii) an empirical evaluation assessing the impact of MCP-based interaction on downstream modeling tasks. Our results show that MCP-based interactions significantly improve both information retrieval (perfect precision/recall across tasks) and model manipulation (reducing syntactic, semantic, and pragmatic errors), while also improving scalability and efficiency compared to serialization-based approaches. The MCP server enables robust modification of existing models, a key limitation of prior approaches. These findings demonstrate that structured, tool-mediated interaction is a crucial enabler for reliable AI-assisted modeling. The presented MCP–GLSP Server constitutes a reusable artifact applicable across GLSP-based tools, providing a practical foundation to advance intelligent modeling assistance.",
+      ],
+      de: [
+        "Basierend auf der Diplomarbeit habe ich ein weiteres Paper publiziert. https://doi.org/10.1145/3822455.3830317",
+        "Model-Driven Engineering (MDE) offers strong abstractions but remains hindered in practice by complex tooling and steep learning curves. Recent advances in Large Language Models (LLMs) promise intuitive, natural-language interaction with modeling environments; however, existing approaches—such as direct API interaction, DSL generation, or manipulation of serialized models—exhibit limited reliability, scalability, and semantic precision. This paper presents a structured integration of LLMs into graphical modeling environments via the Model Context Protocol (MCP). We design and implement a reusable MCP server for the Graphical Language Server Platform (GLSP), enabling LLM agents to interact with models through semantically grounded, tool-based operations rather than direct model generation. We contribute (i) a reference architecture for MCP-based integration into GLSP derived from a systematic literature review of MCP implementations, (ii) design principles for mapping modeling concepts to MCP primitives and abstraction levels, and (iii) an empirical evaluation assessing the impact of MCP-based interaction on downstream modeling tasks. Our results show that MCP-based interactions significantly improve both information retrieval (perfect precision/recall across tasks) and model manipulation (reducing syntactic, semantic, and pragmatic errors), while also improving scalability and efficiency compared to serialization-based approaches. The MCP server enables robust modification of existing models, a key limitation of prior approaches. These findings demonstrate that structured, tool-mediated interaction is a crucial enabler for reliable AI-assisted modeling. The presented MCP–GLSP Server constitutes a reusable artifact applicable across GLSP-based tools, providing a practical foundation to advance intelligent modeling assistance.",
+      ],
+    },
+    context: "education",
+    org: {
+      en: "MODELS '26: Proceedings of the ACM/IEEE 29th International Conference on Model Driven Engineering Languages and Systems",
+      de: "MODELS '26: Proceedings of the ACM/IEEE 29th International Conference on Model Driven Engineering Languages and Systems",
+    },
+    start: "2026-10",
+    end: "2026-10",
+    skills: [],
+    links: {
+      doc: "https://doi.org/10.1145/3822455.3830317",
+    },
+    important: false,
+  },
+  {
+    id: "glsp-langium-integration-paper",
+    title: {
+      en: "Paper - Interweaving Graphical and Textual Modelling using GLSP and Langium",
+      de: "Paper - Interweaving Graphical and Textual Modelling using GLSP and Langium",
+    },
+    description: {
+      en: [
+        "Based on the work done in the course of my research internship at King's College London, I published a paper.",
+        "Many domain-specific modelling languages (DSMLs) combine graphical and textual elements. While simple textual labels are often sufficient, some situations (e.g., condition expressions in flowchart-like languages) require more complex textual sub-languages with their own grammar and the ability to reference elements defined elsewhere in the model, providing full scoping support for such references. Developing tool support for DSMLs that integrate expressive graphical and textual elements requires combining two distinct paradigms for language processing: projectional editing for graphical elements and a parsing-based approach for textual elements. A purely projectional approach quickly becomes inconvenient, and parsing-based approaches currently do not handle graphical languages well. For modern web-based language workbenches, such integrations are not well supported. We present a reusable framework for integrating text-based grammar support using Langium into the graphical model of GLSP-based languages. The backend maintains a complete abstract syntax graph, regardless of whether a particular part of the model is edited graphically or textually. Langium-managed text elements automatically handle scoping across the entire model, enabling scenarios where a text node’s position in the graphical model can influence which elements are available for linking. The framework is available open source, and we invite the community to integrate it into their own languages.",
+      ],
+      de: [
+        "Basierend auf der Arbeit während meines Forschungspraktikum am King's College London habe ich ein Paper publiziert.",
+        "Many domain-specific modelling languages (DSMLs) combine graphical and textual elements. While simple textual labels are often sufficient, some situations (e.g., condition expressions in flowchart-like languages) require more complex textual sub-languages with their own grammar and the ability to reference elements defined elsewhere in the model, providing full scoping support for such references. Developing tool support for DSMLs that integrate expressive graphical and textual elements requires combining two distinct paradigms for language processing: projectional editing for graphical elements and a parsing-based approach for textual elements. A purely projectional approach quickly becomes inconvenient, and parsing-based approaches currently do not handle graphical languages well. For modern web-based language workbenches, such integrations are not well supported. We present a reusable framework for integrating text-based grammar support using Langium into the graphical model of GLSP-based languages. The backend maintains a complete abstract syntax graph, regardless of whether a particular part of the model is edited graphically or textually. Langium-managed text elements automatically handle scoping across the entire model, enabling scenarios where a text node’s position in the graphical model can influence which elements are available for linking. The framework is available open source, and we invite the community to integrate it into their own languages.",
+      ],
+    },
+    context: "education",
+    org: {
+      en: "MODELS '26: Proceedings of the ACM/IEEE 29th International Conference on Model Driven Engineering Languages and Systems",
+      de: "MODELS '26: Proceedings of the ACM/IEEE 29th International Conference on Model Driven Engineering Languages and Systems",
+    },
+    start: "2026-10",
+    end: "2026-10",
+    skills: [],
+    links: {
+      doc: "https://doi.org/10.1145/3837062.3838863",
+    },
+    important: false,
+  },
+  {
     id: "personal-portfolio-website",
     title: { en: "Personal Portfolio Website", de: "Persönliche Portfolio-Website" },
     description: {
