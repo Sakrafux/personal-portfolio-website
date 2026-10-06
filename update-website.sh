@@ -13,7 +13,7 @@ git pull origin main
 
 # Build the new Docker image
 # This automatically runs the build steps inside the container
-docker build -t portfolio-website:latest .
+docker build --no-cache -t portfolio-website:latest .
 
 # Stop and remove the old container if it's running
 docker stop portfolio-website || true
